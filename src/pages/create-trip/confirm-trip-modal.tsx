@@ -1,6 +1,8 @@
 import { AtSign, User, X } from "lucide-react";
 import { FormEvent } from "react";
 
+import { Button } from "../../components/button";
+
 interface ConfirmTripModalProps {
   createTrip: (event: FormEvent<HTMLFormElement>) => void;
   closeConfirmTripModal: () => void;
@@ -61,12 +63,9 @@ export function ConfirmTripModal({
             />
           </div>
 
-          <button
-            type="submit"
-            className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-pink-300 px-5 font-medium text-pink-900 hover:bg-pink-200"
-          >
+          <Button type="submit" size="full">
             Confirmar criação da viagem
-          </button>
+          </Button>
         </form>
       </div>
     </div>

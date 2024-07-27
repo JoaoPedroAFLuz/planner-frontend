@@ -1,5 +1,7 @@
 import { CircleCheck, Plus } from "lucide-react";
 
+import { Button } from "../../components/button";
+
 interface ActivitiesProps {
   openCreateActivityModal: () => void;
 }
@@ -10,14 +12,11 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-semibold">Atividades</h2>
 
-        <button
-          onClick={openCreateActivityModal}
-          className="flex items-center gap-2 rounded-lg bg-pink-300 px-5 py-2 font-medium text-pink-900 hover:bg-pink-200"
-        >
+        <Button onClick={openCreateActivityModal}>
           <Plus className="size-5" />
 
           <span>Cadastrar atividade</span>
-        </button>
+        </Button>
       </div>
 
       <div className="space-y-8">
