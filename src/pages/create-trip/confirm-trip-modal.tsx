@@ -33,7 +33,7 @@ export function ConfirmTripModal({
             <span className="font-semibold text-zinc-100">
               20 a 26 de Dezembro de 2024
             </span>{" "}
-            preencha seus dados abaixo:
+            <span>preencha seus dados abaixo:</span>
           </p>
         </div>
 

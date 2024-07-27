@@ -42,7 +42,8 @@ export function DestinationAndDateStep({
           onClick={hideGuestsInput}
           className="flex items-center gap-2 rounded-lg bg-zinc-800 px-5 py-2 font-medium text-zinc-200 hover:bg-zinc-700"
         >
-          Alterar local/data
+          <span>Alterar local/data</span>
+
           <Settings2 className="size-5" />
         </button>
       ) : (
@@ -50,7 +51,8 @@ export function DestinationAndDateStep({
           onClick={showGuestsInput}
           className="flex items-center gap-2 rounded-lg bg-pink-300 px-5 py-2 font-medium text-pink-900 hover:bg-pink-200"
         >
-          Continuar
+          <span>Continuar</span>
+
           <ArrowRight className="size-5" />
         </button>
       )}

@@ -39,7 +39,8 @@ export function InviteGuestsStep({
         onClick={openConfirmTripModal}
         className="flex items-center gap-2 rounded-lg bg-pink-300 px-5 py-2 font-medium text-pink-900 hover:bg-pink-200"
       >
-        Confirmar viagem
+        <span>Confirmar viagem</span>
+
         <ArrowRight className="size-5" />
       </button>
     </div>
