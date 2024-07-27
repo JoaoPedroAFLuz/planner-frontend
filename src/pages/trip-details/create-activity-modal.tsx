@@ -2,6 +2,7 @@ import { Calendar, Tag, X } from "lucide-react";
 import { FormEvent } from "react";
 
 import { Button } from "../../components/button";
+import { Input } from "../../components/input";
 
 interface CreateActivityModalProps {
   createActivity: (event: FormEvent<HTMLFormElement>) => void;
@@ -35,21 +36,17 @@ export function CreateActivityModal({
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <Tag className="size-5 text-zinc-400" />
 
-            <input
-              name="title"
-              placeholder="Qual a atividade?"
-              className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
-            />
+            <Input name="title" size="full" placeholder="Qual a atividade?" />
           </div>
 
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <Calendar className="size-5 text-zinc-400" />
 
-            <input
+            <Input
               name="occursAt"
               type="datetime-local"
+              size="full"
               placeholder="Data"
-              className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
             />
           </div>
 

@@ -2,6 +2,7 @@ import { AtSign, User, X } from "lucide-react";
 import { FormEvent } from "react";
 
 import { Button } from "../../components/button";
+import { Input } from "../../components/input";
 
 interface ConfirmTripModalProps {
   createTrip: (event: FormEvent<HTMLFormElement>) => void;
@@ -45,21 +46,17 @@ export function ConfirmTripModal({
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <User className="size-5 text-zinc-400" />
 
-            <input
-              name="name"
-              placeholder="Seu nome completo"
-              className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
-            />
+            <Input name="name" size="full" placeholder="Seu nome completo" />
           </div>
 
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <AtSign className="size-5 text-zinc-400" />
 
-            <input
+            <Input
               name="email"
               type="email"
+              size="full"
               placeholder="Seu e-mail pessoal"
-              className="flex-1 bg-transparent text-lg placeholder-zinc-400 outline-none"
             />
           </div>
 
