@@ -3,6 +3,8 @@ import { Link2, Plus } from "lucide-react";
 import { Button } from "../../components/button";
 
 export function ImportantLinks() {
+  // const { tripCode } = useParams();
+
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">Links Importantes</h2>

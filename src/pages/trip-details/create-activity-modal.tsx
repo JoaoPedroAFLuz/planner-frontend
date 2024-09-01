@@ -1,18 +1,36 @@
 import { Calendar, Tag, X } from "lucide-react";
 import { FormEvent } from "react";
+import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
+import { api } from "../../lib/axios";
 
 interface CreateActivityModalProps {
-  createActivity: (event: FormEvent<HTMLFormElement>) => void;
   closeCreateActivityModal: () => void;
 }
 
 export function CreateActivityModal({
-  createActivity,
   closeCreateActivityModal,
 }: CreateActivityModalProps) {
+  const { tripCode } = useParams();
+
+  async function createActivity(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+
+    const title = data.get("title") as string;
+    const occursAt = data.get("occursAt") as string;
+
+    await api.post(`/trips/${tripCode}/activities`, {
+      title,
+      occursAt,
+    });
+
+    closeCreateActivityModal();
+  }
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
       <div className="w-[540px] space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
