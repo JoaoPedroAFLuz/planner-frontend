@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { linkService } from "../services/linkService";
 
 interface CreateLinkProps {
-  tripCode: string;
+  activityCode: string;
   title: string;
   url: string;
 }

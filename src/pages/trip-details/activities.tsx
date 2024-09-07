@@ -1,16 +1,22 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CircleCheck, Plus } from "lucide-react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button } from "../../components/button";
+import { Activity } from "../../entities/activity";
 import { useDayActivitiesByTripCode } from "../../hooks/useDayActivitiesByTripCode";
+
+import { Button } from "../../components/button";
+import { ActivityDetailsModal } from "./activity-details";
 
 interface ActivitiesProps {
   openCreateActivityModal: () => void;
 }
 
 export function Activities({ openCreateActivityModal }: ActivitiesProps) {
+  const [activity, setActivity] = useState<Activity | null>(null);
+
   const { tripCode } = useParams();
   const { dayActivities, isFetching } = useDayActivitiesByTripCode(tripCode!);
 
@@ -51,9 +57,13 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
                   Nenhuma atividade cadastrada nesta data.
                 </p>
               ) : (
-                <div className="space-y-2">
+                <button className="w-full space-y-2">
                   {category.activities.map((activity) => (
-                    <div key={activity.code} className="space-y-2.5">
+                    <div
+                      key={activity.code}
+                      className="space-y-2.5"
+                      onClick={() => setActivity(activity)}
+                    >
                       <div className="flex items-center gap-3 rounded-xl bg-zinc-900 px-4 py-2.5 shadow-shape">
                         <CircleCheck className="size-5 text-pink-300" />
 
@@ -65,11 +75,18 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
                       </div>
                     </div>
                   ))}
-                </div>
+                </button>
               )}
             </div>
           ))}
         </div>
+      )}
+
+      {activity && (
+        <ActivityDetailsModal
+          activity={activity}
+          closeActivityDetailsModal={() => setActivity(null)}
+        />
       )}
     </div>
   );

@@ -5,6 +5,7 @@ import { dayActivitiesService } from "../services/dayActivitiesService";
 interface CreateActivityProps {
   tripCode: string;
   title: string;
+  description?: string;
   occursAt: string;
 }
 

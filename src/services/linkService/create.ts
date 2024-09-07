@@ -1,13 +1,13 @@
 import { httpClient } from "../../lib/axios";
 
 interface CreateLinkProps {
-  tripCode: string;
+  activityCode: string;
   title: string;
   url: string;
 }
 
-export async function create({ tripCode, title, url }: CreateLinkProps) {
-  await httpClient.post(`/trips/${tripCode}/links`, {
+export async function create({ activityCode, title, url }: CreateLinkProps) {
+  await httpClient.post(`/activities/${activityCode}/links`, {
     title,
     url,
   });

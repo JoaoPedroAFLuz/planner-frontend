@@ -1,22 +1,22 @@
 import { Link2, Tag, X } from "lucide-react";
 import { FormEvent } from "react";
-import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
 import { useCreateLink } from "../../hooks/useCreateLink";
-import { useLinksByTripCode } from "../../hooks/useLinksByTripCode";
+import { useLinksByActivityCode } from "../../hooks/useLinksByActivityCode";
 
 interface CreateLinkModalProps {
+  activityCode: string;
   closeCreateLinkModal: () => void;
 }
 
 export function CreateLinkModal({
+  activityCode,
   closeCreateLinkModal,
 }: CreateLinkModalProps) {
-  const { tripCode } = useParams();
   const { isPending, mutateAsync } = useCreateLink();
-  const { refetch } = useLinksByTripCode(tripCode!);
+  const { refetch } = useLinksByActivityCode(activityCode);
 
   async function createLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,7 +27,7 @@ export function CreateLinkModal({
     const url = data.get("url") as string;
 
     await mutateAsync({
-      tripCode: tripCode!,
+      activityCode,
       title,
       url,
     });

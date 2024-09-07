@@ -1,4 +1,4 @@
-import { Calendar, Tag, X } from "lucide-react";
+import { Calendar, NotepadText, Tag, X } from "lucide-react";
 import { FormEvent } from "react";
 import { useParams } from "react-router-dom";
 
@@ -21,8 +21,8 @@ export function CreateActivityModal({
   const { refetch } = useDayActivitiesByTripCode(tripCode!);
   const { trip } = useTrip(tripCode!);
 
-  const inicio = DateUtils.toDateTimeLocalInput(trip!.startsAt);
-  const fim = DateUtils.toDateTimeLocalInput(trip!.endsAt);
+  const tripStart = DateUtils.toDateTimeLocalInput(trip!.startsAt);
+  const tripEnd = DateUtils.toDateTimeLocalInput(trip!.endsAt);
 
   async function createActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,11 +30,17 @@ export function CreateActivityModal({
     const data = new FormData(event.currentTarget);
 
     const title = data.get("title") as string;
+    const description = data.get("description") as string;
     const occursAt = data.get("occursAt") as string;
+
+    if (!title || !occursAt) {
+      return;
+    }
 
     await mutateAsync({
       tripCode: tripCode!,
       title,
+      description,
       occursAt,
     });
 
@@ -70,6 +76,12 @@ export function CreateActivityModal({
           </div>
 
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
+            <NotepadText className="size-5 text-zinc-400" />
+
+            <Input name="description" size="full" placeholder="Descrição" />
+          </div>
+
+          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <Calendar className="size-5 text-zinc-400" />
 
             <Input
@@ -77,8 +89,8 @@ export function CreateActivityModal({
               type="datetime-local"
               size="full"
               placeholder="Data"
-              min={inicio}
-              max={fim}
+              min={tripStart}
+              max={tripEnd}
             />
           </div>
 

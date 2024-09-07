@@ -1,7 +1,7 @@
 import { create } from "./create";
-import { getAllByTripCode } from "./getAllByTripCode";
+import { getAllByActivityCode } from "./getAllByActivityCode";
 
 export const linkService = {
-  getAllByTripCode,
+  getAllByActivityCode,
   create,
 };

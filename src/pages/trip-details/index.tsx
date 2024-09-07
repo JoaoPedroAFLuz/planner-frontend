@@ -5,7 +5,6 @@ import { useTrip } from "../../hooks/useTrip";
 import { Activities } from "./activities";
 import { CreateActivityModal } from "./create-activity-modal";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
-import { ImportantLinks } from "./important-links";
 import { Participants } from "./participants";
 
 export function TripDetailsPage() {
@@ -31,10 +30,6 @@ export function TripDetailsPage() {
         <Activities openCreateActivityModal={openCreateActivityModal} />
 
         <div className="w-80 space-y-6">
-          <ImportantLinks />
-
-          <div className="h-px w-full bg-zinc-800"></div>
-
           <Participants />
         </div>
       </main>
