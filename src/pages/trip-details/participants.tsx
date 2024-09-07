@@ -3,8 +3,9 @@ import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/button";
-import { useInviteParticipant } from "../../hooks/useInviteParticipant";
+import { useInviteParticipantToTrip } from "../../hooks/useInviteParticipantToTrip";
 import { useParticipantsByTripCode } from "../../hooks/useParticipantsByTripCode";
+import { useRemoveParticipantFromTrip } from "../../hooks/useRemoveParticipantFromTrip";
 import { InviteParticipantsModal } from "../create-trip/invite-participants-modal";
 
 export function Participants() {
@@ -12,7 +13,8 @@ export function Participants() {
     useState(false);
 
   const { tripCode } = useParams();
-  const { mutateAsync } = useInviteParticipant();
+  const { inviteParticipantsToTrip } = useInviteParticipantToTrip();
+  const { removeParticipantFromTrip } = useRemoveParticipantFromTrip();
   const { participants, isFetching, refetch } = useParticipantsByTripCode(
     tripCode!,
   );
@@ -37,7 +39,26 @@ export function Participants() {
 
     event.currentTarget.reset();
 
-    await mutateAsync({ tripCode: tripCode!, email: emailToInvite });
+    await inviteParticipantsToTrip({
+      tripCode: tripCode!,
+      email: emailToInvite,
+    });
+    await refetch();
+  }
+
+  async function removeParticipant(participantEmail: string) {
+    const participantCode = participants.find(
+      ({ email }) => email === participantEmail,
+    )?.code;
+
+    if (!participantCode) {
+      return;
+    }
+
+    await removeParticipantFromTrip({
+      tripCode: tripCode!,
+      participantCode,
+    });
     await refetch();
   }
 
@@ -93,7 +114,7 @@ export function Participants() {
             setIsManagingParticipantsModalOpen(false)
           }
           addEmailToInvite={addEmailToInvite}
-          removeEmailToInvite={() => {}}
+          removeEmailToInvite={removeParticipant}
         />
       )}
     </div>

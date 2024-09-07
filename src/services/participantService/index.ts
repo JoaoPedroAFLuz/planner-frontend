@@ -1,7 +1,9 @@
 import { getAllByTripCode } from "./getAllByTripCode";
-import { invite } from "./invite";
+import { inviteToTrip } from "./inviteToTrip";
+import { removeFromTrip } from "./removeFromTrip";
 
 export const participantService = {
   getAllByTripCode,
-  invite,
+  inviteToTrip,
+  removeFromTrip,
 };
