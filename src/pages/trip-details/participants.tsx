@@ -1,12 +1,45 @@
 import { CheckCircle2, CircleDashed, UserCog } from "lucide-react";
+import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/button";
+import { useInviteParticipant } from "../../hooks/useInviteParticipant";
 import { useParticipantsByTripCode } from "../../hooks/useParticipantsByTripCode";
+import { InviteParticipantsModal } from "../create-trip/invite-participants-modal";
 
 export function Participants() {
+  const [isManagingParticipantsModalOpen, setIsManagingParticipantsModalOpen] =
+    useState(false);
+
   const { tripCode } = useParams();
-  const { participants, isFetching } = useParticipantsByTripCode(tripCode!);
+  const { mutateAsync } = useInviteParticipant();
+  const { participants, isFetching, refetch } = useParticipantsByTripCode(
+    tripCode!,
+  );
+
+  function openManagingParticipantsModal() {
+    setIsManagingParticipantsModalOpen(true);
+  }
+
+  async function addEmailToInvite(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const emailToInvite = data.get("email") as string;
+
+    if (!emailToInvite) {
+      return console.error("Por favor, preencha o campo de e-mail");
+    }
+
+    if (participants.find(({ email }) => email === emailToInvite)) {
+      return console.warn("Participante com esse e-mail já foi convidado");
+    }
+
+    event.currentTarget.reset();
+
+    await mutateAsync({ tripCode: tripCode!, email: emailToInvite });
+    await refetch();
+  }
 
   return (
     <div className="space-y-6">
@@ -43,11 +76,26 @@ export function Participants() {
         </div>
       )}
 
-      <Button variant="secondary" size="full">
+      <Button
+        variant="secondary"
+        size="full"
+        onClick={openManagingParticipantsModal}
+      >
         <UserCog className="size-5" />
 
         <span>Gerenciar participantes</span>
       </Button>
+
+      {isManagingParticipantsModalOpen && (
+        <InviteParticipantsModal
+          emailsToInvite={participants.map(({ email }) => email)}
+          closeParticipantsModal={() =>
+            setIsManagingParticipantsModalOpen(false)
+          }
+          addEmailToInvite={addEmailToInvite}
+          removeEmailToInvite={() => {}}
+        />
+      )}
     </div>
   );
 }
