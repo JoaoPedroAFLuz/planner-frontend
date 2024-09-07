@@ -1,8 +1,9 @@
 import { format } from "date-fns";
 import { Calendar, MapPin, Settings2 } from "lucide-react";
 
-import { Button } from "../../components/button";
 import { Trip } from "../../entities/trip";
+
+import { Button } from "../../components/button";
 
 interface DestinationAndDateHeaderProps {
   trip?: Trip;
@@ -13,7 +14,7 @@ export function DestinationAndDateHeader({
 }: DestinationAndDateHeaderProps) {
   const displayedDate = trip
     ? `${format(trip.startsAt, "d' de 'LLL")} até ${format(trip.endsAt, "d' de 'LLL")}`
-    : "teste";
+    : "";
 
   return (
     <div className="flex h-16 items-center justify-between rounded-xl bg-zinc-900 px-4 shadow-shape">

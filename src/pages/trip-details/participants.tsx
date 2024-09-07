@@ -2,10 +2,11 @@ import { CheckCircle2, CircleDashed, UserCog } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button } from "../../components/button";
 import { useInviteParticipantToTrip } from "../../hooks/useInviteParticipantToTrip";
 import { useParticipantsByTripCode } from "../../hooks/useParticipantsByTripCode";
 import { useRemoveParticipantFromTrip } from "../../hooks/useRemoveParticipantFromTrip";
+
+import { Button } from "../../components/button";
 import { InviteParticipantsModal } from "../create-trip/invite-participants-modal";
 
 export function Participants() {
@@ -79,7 +80,7 @@ export function Participants() {
             >
               <div className="space-y-1.5">
                 <span className="block font-medium text-zinc-100">
-                  {participant.name || `Participante ${index}`}
+                  {participant.name || `Participante ${index + 1}`}
                 </span>
 
                 <span className="block truncate text-sm text-zinc-400">

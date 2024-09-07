@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { Activity } from "../../entities/activity";
 
 import { Button } from "../../components/button";
-import { Links } from "./important-links";
+import { Links } from "./links";
 
 interface ActivityDetailsModalProps {
   activity: Activity;

@@ -2,12 +2,12 @@ import { Calendar, NotepadText, Tag, X } from "lucide-react";
 import { FormEvent } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button } from "../../components/button";
-import { Input } from "../../components/input";
 import { useCreateDayActivity } from "../../hooks/useCreateDayActivity";
 import { useDayActivitiesByTripCode } from "../../hooks/useDayActivitiesByTripCode";
 import { useTrip } from "../../hooks/useTrip";
-import { DateUtils } from "../../utils/time";
+
+import { Button } from "../../components/button";
+import { Input } from "../../components/input";
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
@@ -20,10 +20,6 @@ export function CreateActivityModal({
   const { isPending, mutateAsync } = useCreateDayActivity();
   const { refetch } = useDayActivitiesByTripCode(tripCode!);
   const { trip } = useTrip(tripCode!);
-
-  const tripStart = DateUtils.toDateTimeLocalInput(trip!.startsAt);
-  const tripEnd = DateUtils.toDateTimeLocalInput(trip!.endsAt);
-
   async function createActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -89,8 +85,8 @@ export function CreateActivityModal({
               type="datetime-local"
               size="full"
               placeholder="Data"
-              min={tripStart}
-              max={tripEnd}
+              min={trip!.startsAt}
+              max={trip!.endsAt}
             />
           </div>
 

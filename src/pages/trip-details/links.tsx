@@ -1,7 +1,8 @@
-import { Link2, Plus } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
 
 import { useLinksByActivityCode } from "../../hooks/useLinksByActivityCode";
+import { useRemoveLink } from "../../hooks/useRemoveLink";
 
 import { Button } from "../../components/button";
 import { CreateLinkModal } from "./create-link-modal";
@@ -13,7 +14,8 @@ interface LinksProps {
 export function Links({ activityCode }: LinksProps) {
   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
 
-  const { links, isFetching } = useLinksByActivityCode(activityCode);
+  const { links, isFetching, refetch } = useLinksByActivityCode(activityCode);
+  const { removeLink } = useRemoveLink();
 
   function openCreateLinkModal() {
     setIsCreateLinkModalOpen(true);
@@ -21,6 +23,11 @@ export function Links({ activityCode }: LinksProps) {
 
   function closeCreateLinkModal() {
     setIsCreateLinkModalOpen(false);
+  }
+
+  async function handleRemoveLink(linkCode: string) {
+    await removeLink({ activityCode, linkCode });
+    await refetch();
   }
 
   return (
@@ -61,7 +68,12 @@ export function Links({ activityCode }: LinksProps) {
                     </a>
                   </div>
 
-                  <Link2 className="size-5 shrink-0 text-zinc-400" />
+                  <button
+                    className="rounded p-1 hover:bg-zinc-800"
+                    onClick={() => handleRemoveLink(link.linkCode)}
+                  >
+                    <Trash className="size-5 shrink-0 text-zinc-400" />
+                  </button>
                 </div>
               ))}
           </div>
