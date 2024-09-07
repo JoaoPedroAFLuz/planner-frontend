@@ -2,12 +2,12 @@ import { Calendar, NotepadText, Tag, X } from "lucide-react";
 import { FormEvent } from "react";
 import { useParams } from "react-router-dom";
 
-import { useCreateDayActivity } from "../../hooks/useCreateDayActivity";
-import { useDayActivitiesByTripCode } from "../../hooks/useDayActivitiesByTripCode";
-import { useTrip } from "../../hooks/useTrip";
+import { useCreateDayActivity } from "@hooks/useCreateDayActivity";
+import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
+import { useTrip } from "@hooks/useTrip";
 
-import { Button } from "../../components/button";
-import { Input } from "../../components/input";
+import { Button } from "@components/button";
+import { Input } from "@components/input";
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;

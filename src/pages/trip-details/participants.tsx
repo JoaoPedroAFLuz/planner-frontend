@@ -2,11 +2,11 @@ import { CheckCircle2, CircleDashed, UserCog } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useInviteParticipantToTrip } from "../../hooks/useInviteParticipantToTrip";
-import { useParticipantsByTripCode } from "../../hooks/useParticipantsByTripCode";
-import { useRemoveParticipantFromTrip } from "../../hooks/useRemoveParticipantFromTrip";
+import { useInviteParticipantToTrip } from "@hooks/useInviteParticipantToTrip";
+import { useParticipantsByTripCode } from "@hooks/useParticipantsByTripCode";
+import { useRemoveParticipantFromTrip } from "@hooks/useRemoveParticipantFromTrip";
 
-import { Button } from "../../components/button";
+import { Button } from "@components/button";
 import { InviteParticipantsModal } from "../create-trip/invite-participants-modal";
 
 export function Participants() {

@@ -1,10 +1,10 @@
 import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
 
-import { useLinksByActivityCode } from "../../hooks/useLinksByActivityCode";
-import { useRemoveLink } from "../../hooks/useRemoveLink";
+import { useLinksByActivityCode } from "@hooks/useLinksByActivityCode";
+import { useRemoveLink } from "@hooks/useRemoveLink";
 
-import { Button } from "../../components/button";
+import { Button } from "@components/button";
 import { CreateLinkModal } from "./create-link-modal";
 
 interface LinksProps {
@@ -69,7 +69,7 @@ export function Links({ activityCode }: LinksProps) {
                   </div>
 
                   <button
-                    className="rounded p-1 hover:bg-zinc-800"
+                    className="rounded-full p-1 hover:bg-zinc-800"
                     onClick={() => handleRemoveLink(link.linkCode)}
                   >
                     <Trash className="size-5 shrink-0 text-zinc-400" />

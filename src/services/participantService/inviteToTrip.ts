@@ -1,4 +1,4 @@
-import { httpClient } from "../../lib/axios";
+import { httpClient } from "@/libs/axios";
 
 interface InviteProps {
   tripCode: string;

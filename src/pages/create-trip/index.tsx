@@ -2,7 +2,8 @@ import { FormEvent, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { useNavigate } from "react-router-dom";
 
-import { useCreateTrip } from "../../hooks/useCreateTrip";
+import { useCreateTrip } from "@hooks/useCreateTrip";
+
 import { ConfirmTripModal } from "./confirm-trip-modal";
 import { InviteParticipantsModal } from "./invite-participants-modal";
 import { DestinationAndDateStep } from "./steps/destination-and-date-step";

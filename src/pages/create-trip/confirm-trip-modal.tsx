@@ -1,9 +1,9 @@
 import { AtSign, User, X } from "lucide-react";
 import { FormEvent } from "react";
 
+import { Button } from "@components/button";
+import { Input } from "@components/input";
 import { DateRange } from "react-day-picker";
-import { Button } from "../../components/button";
-import { Input } from "../../components/input";
 
 interface ConfirmTripModalProps {
   destination: string;
@@ -31,7 +31,11 @@ export function ConfirmTripModal({
               Confirmar criação de viagem
             </h2>
 
-            <button type="button" onClick={closeConfirmTripModal}>
+            <button
+              type="button"
+              className="rounded-full p-1 hover:bg-zinc-800"
+              onClick={closeConfirmTripModal}
+            >
               <X className="size-5 cursor-pointer text-zinc-400" />
             </button>
           </div>

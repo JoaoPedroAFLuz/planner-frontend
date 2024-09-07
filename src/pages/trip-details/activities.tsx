@@ -4,10 +4,10 @@ import { CircleCheck, Plus } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Activity } from "../../entities/activity";
-import { useDayActivitiesByTripCode } from "../../hooks/useDayActivitiesByTripCode";
+import { Activity } from "@entities/activity";
+import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
 
-import { Button } from "../../components/button";
+import { Button } from "@components/button";
 import { ActivityDetailsModal } from "./activity-details";
 
 interface ActivitiesProps {
@@ -23,7 +23,7 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
   return (
     <div className="flex-1 space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-semibold">Atividades</h2>
+        <h2 className="text-3xl font-semibold">Programação</h2>
 
         <Button onClick={openCreateActivityModal}>
           <Plus className="size-5" />
@@ -33,7 +33,7 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
       </div>
 
       {isFetching && (
-        <p className="text-sm text-zinc-500">Carregando atividades...</p>
+        <p className="text-sm text-zinc-500">Carregando programação...</p>
       )}
 
       {!isFetching && (
@@ -64,7 +64,7 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
                       className="space-y-2.5"
                       onClick={() => setActivity(activity)}
                     >
-                      <div className="flex items-center gap-3 rounded-xl bg-zinc-900 px-4 py-2.5 shadow-shape">
+                      <div className="flex items-center gap-3 rounded-xl bg-zinc-900 px-4 py-2.5 shadow-shape hover:bg-zinc-800">
                         <CircleCheck className="size-5 text-pink-300" />
 
                         <span className="text-zinc-100">{activity.title}</span>

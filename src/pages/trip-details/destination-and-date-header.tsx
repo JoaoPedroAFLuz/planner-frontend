@@ -1,9 +1,9 @@
 import { format } from "date-fns";
 import { Calendar, MapPin, Settings2 } from "lucide-react";
 
-import { Trip } from "../../entities/trip";
+import { Trip } from "@entities/trip";
 
-import { Button } from "../../components/button";
+import { Button } from "@components/button";
 
 interface DestinationAndDateHeaderProps {
   trip?: Trip;
