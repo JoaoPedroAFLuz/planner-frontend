@@ -5,8 +5,8 @@ import { useTrip } from "../../hooks/useTrip";
 import { Activities } from "./activities";
 import { CreateActivityModal } from "./create-activity-modal";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
-import { Guests } from "./guests";
 import { ImportantLinks } from "./important-links";
+import { Participants } from "./participants";
 
 export function TripDetailsPage() {
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
@@ -35,7 +35,7 @@ export function TripDetailsPage() {
 
           <div className="h-px w-full bg-zinc-800"></div>
 
-          <Guests />
+          <Participants />
         </div>
       </main>
 

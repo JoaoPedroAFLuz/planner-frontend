@@ -4,19 +4,19 @@ import { FormEvent } from "react";
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
 
-interface InviteGuestsModalProps {
+interface InviteParticipantsModalProps {
   emailsToInvite: string[];
-  closeGuestsModal: () => void;
+  closeParticipantsModal: () => void;
   addEmailToInvite: (event: FormEvent<HTMLFormElement>) => void;
   removeEmailToInvite: (email: string) => void;
 }
 
-export function InviteGuestsModal({
+export function InviteParticipantsModal({
   emailsToInvite,
-  closeGuestsModal,
+  closeParticipantsModal,
   addEmailToInvite,
   removeEmailToInvite,
-}: InviteGuestsModalProps) {
+}: InviteParticipantsModalProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
       <div className="w-[640px] space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
@@ -24,7 +24,7 @@ export function InviteGuestsModal({
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Selecione convidados</h2>
 
-            <button type="button" onClick={closeGuestsModal}>
+            <button type="button" onClick={closeParticipantsModal}>
               <X className="size-5 cursor-pointer text-zinc-400" />
             </button>
           </div>

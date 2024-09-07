@@ -4,16 +4,16 @@ import { useParams } from "react-router-dom";
 import { Button } from "../../components/button";
 import { useParticipantsByTripCode } from "../../hooks/useParticipantsByTripCode";
 
-export function Guests() {
+export function Participants() {
   const { tripCode } = useParams();
   const { participants, isFetching } = useParticipantsByTripCode(tripCode!);
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Convidados</h2>
+      <h2 className="text-xl font-semibold">Participantes</h2>
 
       {isFetching && (
-        <p className="text-sm text-zinc-400">Carregando convidados...</p>
+        <p className="text-sm text-zinc-400">Carregando participantes...</p>
       )}
 
       {!isFetching && (
@@ -25,7 +25,7 @@ export function Guests() {
             >
               <div className="space-y-1.5">
                 <span className="block font-medium text-zinc-100">
-                  {participant.name || `Convidado ${index}`}
+                  {participant.name || `Participante ${index}`}
                 </span>
 
                 <span className="block truncate text-sm text-zinc-400">
@@ -46,7 +46,7 @@ export function Guests() {
       <Button variant="secondary" size="full">
         <UserCog className="size-5" />
 
-        <span>Gerenciar convidados</span>
+        <span>Gerenciar participantes</span>
       </Button>
     </div>
   );

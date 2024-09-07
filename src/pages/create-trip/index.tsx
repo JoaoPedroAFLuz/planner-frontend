@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import { useCreateTrip } from "../../hooks/useCreateTrip";
 import { ConfirmTripModal } from "./confirm-trip-modal";
-import { InviteGuestsModal } from "./invite-guests-modal";
+import { InviteParticipantsModal } from "./invite-participants-modal";
 import { DestinationAndDateStep } from "./steps/destination-and-date-step";
-import { InviteGuestsStep } from "./steps/invite-guests-step";
+import { InviteParticipantsStep } from "./steps/invite-participants-step";
 
 export function CreateTripPage() {
   const [ownerName, setOwnerName] = useState("");
@@ -16,27 +16,28 @@ export function CreateTripPage() {
   const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
     DateRange | undefined
   >();
-  const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
-  const [isGuestsInputVisible, setIsGuestsInputVisible] = useState(false);
+  const [isParticipantsModalOpen, setIsParticipantsModalOpen] = useState(false);
+  const [isParticipantsInputVisible, setIsParticipantsInputVisible] =
+    useState(false);
   const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const { mutateAsync } = useCreateTrip();
 
-  function showGuestsInput() {
-    setIsGuestsInputVisible(true);
+  function showParticipantsInput() {
+    setIsParticipantsInputVisible(true);
   }
 
-  function hideGuestsInput() {
-    setIsGuestsInputVisible(false);
+  function hideParticipantsInput() {
+    setIsParticipantsInputVisible(false);
   }
 
-  function openGuestsModal() {
-    setIsGuestsModalOpen(true);
+  function openParticipantsModal() {
+    setIsParticipantsModalOpen(true);
   }
 
-  function closeGuestsModal() {
-    setIsGuestsModalOpen(false);
+  function closeParticipantsModal() {
+    setIsParticipantsModalOpen(false);
   }
 
   function addEmailToInvite(event: FormEvent<HTMLFormElement>) {
@@ -111,17 +112,17 @@ export function CreateTripPage() {
         <div className="space-y-4">
           <DestinationAndDateStep
             eventStartAndEndDates={eventStartAndEndDates}
-            isGuestsInputVisible={isGuestsInputVisible}
+            isParticipantsInputVisible={isParticipantsInputVisible}
             setDestination={setDestination}
             setEventStartAndEndDates={setEventStartAndEndDates}
-            showGuestsInput={showGuestsInput}
-            hideGuestsInput={hideGuestsInput}
+            showParticipantsInput={showParticipantsInput}
+            hideParticipantsInput={hideParticipantsInput}
           />
 
-          {isGuestsInputVisible && (
-            <InviteGuestsStep
+          {isParticipantsInputVisible && (
+            <InviteParticipantsStep
               emailsToInvite={emailsToInvite}
-              openGuestsModal={openGuestsModal}
+              openParticipantsModal={openParticipantsModal}
               openConfirmTripModal={openConfirmTripModal}
             />
           )}
@@ -142,10 +143,10 @@ export function CreateTripPage() {
         </p>
       </div>
 
-      {isGuestsModalOpen && (
-        <InviteGuestsModal
+      {isParticipantsModalOpen && (
+        <InviteParticipantsModal
           emailsToInvite={emailsToInvite}
-          closeGuestsModal={closeGuestsModal}
+          closeParticipantsModal={closeParticipantsModal}
           addEmailToInvite={addEmailToInvite}
           removeEmailToInvite={removeEmailToInvite}
         />

@@ -8,21 +8,21 @@ import { Button } from "../../../components/button";
 import { Input } from "../../../components/input";
 
 interface DestinationAndDateStepProps {
-  isGuestsInputVisible: boolean;
+  isParticipantsInputVisible: boolean;
   eventStartAndEndDates: DateRange | undefined;
   setDestination: (value: string) => void;
   setEventStartAndEndDates: (value: DateRange | undefined) => void;
-  showGuestsInput: () => void;
-  hideGuestsInput: () => void;
+  showParticipantsInput: () => void;
+  hideParticipantsInput: () => void;
 }
 
 export function DestinationAndDateStep({
-  isGuestsInputVisible,
+  isParticipantsInputVisible,
   eventStartAndEndDates,
   setDestination,
   setEventStartAndEndDates,
-  showGuestsInput,
-  hideGuestsInput,
+  showParticipantsInput,
+  hideParticipantsInput,
 }: DestinationAndDateStepProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
@@ -49,14 +49,14 @@ export function DestinationAndDateStep({
         <Input
           size="full"
           placeholder="Para onde você vai?"
-          disabled={isGuestsInputVisible}
+          disabled={isParticipantsInputVisible}
           onChange={(event) => setDestination(event.target.value)}
         />
       </div>
 
       <button
         onClick={openDatePicker}
-        disabled={isGuestsInputVisible}
+        disabled={isParticipantsInputVisible}
         className="flex w-[250px] items-center gap-2 text-left"
       >
         <Calendar className="size-5 text-zinc-400" />
@@ -92,14 +92,14 @@ export function DestinationAndDateStep({
 
       <div className="h-6 w-px bg-zinc-800" />
 
-      {isGuestsInputVisible ? (
-        <Button onClick={hideGuestsInput} variant="secondary">
+      {isParticipantsInputVisible ? (
+        <Button onClick={hideParticipantsInput} variant="secondary">
           <span>Alterar local/data</span>
 
           <Settings2 className="size-5" />
         </Button>
       ) : (
-        <Button onClick={showGuestsInput}>
+        <Button onClick={showParticipantsInput}>
           <span>Continuar</span>
 
           <ArrowRight className="size-5" />
