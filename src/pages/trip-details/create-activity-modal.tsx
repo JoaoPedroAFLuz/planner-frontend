@@ -4,7 +4,10 @@ import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
-import { api } from "../../lib/axios";
+import { useCreateDayActivity } from "../../hooks/useCreateDayActivity";
+import { useDayActivitiesByTripCode } from "../../hooks/useDayActivitiesByTripCode";
+import { useTrip } from "../../hooks/useTrip";
+import { DateUtils } from "../../utils/time";
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
@@ -14,6 +17,12 @@ export function CreateActivityModal({
   closeCreateActivityModal,
 }: CreateActivityModalProps) {
   const { tripCode } = useParams();
+  const { isPending, mutateAsync } = useCreateDayActivity();
+  const { refetch } = useDayActivitiesByTripCode(tripCode!);
+  const { trip } = useTrip(tripCode!);
+
+  const inicio = DateUtils.toDateTimeLocalInput(trip!.startsAt);
+  const fim = DateUtils.toDateTimeLocalInput(trip!.endsAt);
 
   async function createActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,10 +32,13 @@ export function CreateActivityModal({
     const title = data.get("title") as string;
     const occursAt = data.get("occursAt") as string;
 
-    await api.post(`/trips/${tripCode}/activities`, {
+    await mutateAsync({
+      tripCode: tripCode!,
       title,
       occursAt,
     });
+
+    await refetch();
 
     closeCreateActivityModal();
   }
@@ -65,11 +77,13 @@ export function CreateActivityModal({
               type="datetime-local"
               size="full"
               placeholder="Data"
+              min={inicio}
+              max={fim}
             />
           </div>
 
-          <Button type="submit" size="full">
-            Salvar atividade
+          <Button type="submit" size="full" disabled={isPending}>
+            {isPending ? "Cadastrando..." : "Cadastrar"}
           </Button>
         </form>
       </div>

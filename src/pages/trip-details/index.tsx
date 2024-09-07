@@ -1,30 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { api } from "../../lib/axios";
+import { useTrip } from "../../hooks/useTrip";
 import { Activities } from "./activities";
 import { CreateActivityModal } from "./create-activity-modal";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
 import { Guests } from "./guests";
 import { ImportantLinks } from "./important-links";
 
-export interface Trip {
-  id: number;
-  code: string;
-  ownerName: string;
-  ownerEmail: string;
-  destination: string;
-  startsAt: Date;
-  endsAt: Date;
-  createdAt: Date;
-}
-
 export function TripDetailsPage() {
-  const [trip, setTrip] = useState<Trip | undefined>();
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
     useState(false);
 
   const { tripCode } = useParams();
+  const { trip } = useTrip(tripCode!);
 
   function openCreateActivityModal() {
     setIsCreateActivityModalOpen(true);
@@ -33,12 +22,6 @@ export function TripDetailsPage() {
   function closeCreateActivityModal() {
     setIsCreateActivityModalOpen(false);
   }
-
-  useEffect(() => {
-    api.get(`/trips/${tripCode}`).then((response) => {
-      setTrip(response.data);
-    });
-  }, [tripCode]);
 
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-6 py-10">

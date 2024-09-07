@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
-import { api } from "../../lib/axios";
+import { useCreateLink } from "../../hooks/useCreateLink";
+import { useLinksByTripCode } from "../../hooks/useLinksByTripCode";
 
 interface CreateLinkModalProps {
   closeCreateLinkModal: () => void;
@@ -14,6 +15,8 @@ export function CreateLinkModal({
   closeCreateLinkModal,
 }: CreateLinkModalProps) {
   const { tripCode } = useParams();
+  const { isPending, mutateAsync } = useCreateLink();
+  const { refetch } = useLinksByTripCode(tripCode!);
 
   async function createLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,10 +26,13 @@ export function CreateLinkModal({
     const title = data.get("title") as string;
     const url = data.get("url") as string;
 
-    await api.post(`/trips/${tripCode}/links`, {
+    await mutateAsync({
+      tripCode: tripCode!,
       title,
       url,
     });
+
+    await refetch();
 
     closeCreateLinkModal();
   }
@@ -63,8 +69,8 @@ export function CreateLinkModal({
             <Input name="url" size="full" placeholder="Url" />
           </div>
 
-          <Button type="submit" size="full">
-            Salvar link
+          <Button type="submit" size="full" disabled={isPending}>
+            {isPending ? "Cadastrando..." : "Cadastrar"}
           </Button>
         </form>
       </div>

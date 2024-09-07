@@ -1,4 +1,5 @@
 import pluginJs from "@eslint/js";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 import eslintConfigPrettier from "eslint-config-prettier";
 import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
 import globals from "globals";
@@ -18,6 +19,7 @@ export default [
   { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
+  ...pluginQuery.configs["flat/recommended"],
   ...tseslint.configs.recommended,
   pluginReactConfig,
   {
