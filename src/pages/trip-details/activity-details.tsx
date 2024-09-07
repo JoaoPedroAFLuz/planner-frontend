@@ -3,6 +3,8 @@ import { X } from "lucide-react";
 import { Activity } from "../../entities/activity";
 
 import { Button } from "../../components/button";
+import { useDayActivitiesByTripCode } from "../../hooks/useDayActivitiesByTripCode";
+import { useRemoveActivity } from "../../hooks/useRemoveActivity";
 import { Links } from "./links";
 
 interface ActivityDetailsModalProps {
@@ -14,6 +16,20 @@ export function ActivityDetailsModal({
   activity,
   closeActivityDetailsModal,
 }: ActivityDetailsModalProps) {
+  const { removeActivity } = useRemoveActivity();
+  const { refetch } = useDayActivitiesByTripCode(activity.tripCode);
+
+  async function handleRemoveActivity() {
+    await removeActivity({
+      tripCode: activity.tripCode,
+      activityCode: activity.code,
+    });
+
+    await refetch();
+
+    closeActivityDetailsModal();
+  }
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
       <div className="w-[540px] space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
@@ -41,7 +57,7 @@ export function ActivityDetailsModal({
 
         <div className="h-px w-full bg-zinc-800"></div>
 
-        <Button variant="danger" size="full">
+        <Button variant="danger" size="full" onClick={handleRemoveActivity}>
           Remover atividade
         </Button>
       </div>
