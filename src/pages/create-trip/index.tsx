@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 import { useCreateTrip } from "@hooks/useCreateTrip";
 
+import { DestinationAndDate } from "../../components/destination-and-date";
+import { InviteParticipants } from "../../components/invite-participants";
+import { InviteParticipantsModal } from "../../components/invite-participants-modal";
 import { ConfirmTripModal } from "./confirm-trip-modal";
-import { InviteParticipantsModal } from "./invite-participants-modal";
-import { DestinationAndDateStep } from "./steps/destination-and-date-step";
-import { InviteParticipantsStep } from "./steps/invite-participants-step";
 
 export function CreateTripPage() {
   const [ownerName, setOwnerName] = useState("");
@@ -112,7 +112,7 @@ export function CreateTripPage() {
         </div>
 
         <div className="space-y-4">
-          <DestinationAndDateStep
+          <DestinationAndDate
             eventStartAndEndDates={eventStartAndEndDates}
             isParticipantsInputVisible={isParticipantsInputVisible}
             setDestination={setDestination}
@@ -122,7 +122,7 @@ export function CreateTripPage() {
           />
 
           {isParticipantsInputVisible && (
-            <InviteParticipantsStep
+            <InviteParticipants
               emailsToInvite={emailsToInvite}
               openParticipantsModal={openParticipantsModal}
               openConfirmTripModal={openConfirmTripModal}

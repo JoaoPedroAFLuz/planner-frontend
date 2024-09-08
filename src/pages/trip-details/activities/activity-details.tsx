@@ -5,7 +5,7 @@ import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
 import { useRemoveActivity } from "@hooks/useRemoveActivity";
 
 import { Button } from "@components/button";
-import { Links } from "./links";
+import { Links } from "../links";
 
 interface ActivityDetailsModalProps {
   activity: Activity;

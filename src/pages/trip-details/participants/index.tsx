@@ -6,8 +6,8 @@ import { useInviteParticipantToTrip } from "@hooks/useInviteParticipantToTrip";
 import { useParticipantsByTripCode } from "@hooks/useParticipantsByTripCode";
 import { useRemoveParticipantFromTrip } from "@hooks/useRemoveParticipantFromTrip";
 
+import { InviteParticipantsModal } from "@/components/invite-participants-modal";
 import { Button } from "@components/button";
-import { InviteParticipantsModal } from "../create-trip/invite-participants-modal";
 
 export function Participants() {
   const [isManagingParticipantsModalOpen, setIsManagingParticipantsModalOpen] =

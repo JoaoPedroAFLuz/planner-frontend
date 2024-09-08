@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useTrip } from "@hooks/useTrip";
 
 import { Activities } from "./activities";
-import { CreateActivityModal } from "./create-activity-modal";
+import { CreateActivityModal } from "./activities/create-activity-modal";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
 import { Participants } from "./participants";
 

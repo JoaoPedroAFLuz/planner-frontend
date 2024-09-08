@@ -2,17 +2,17 @@ import { ArrowRight, UserRoundPlus } from "lucide-react";
 
 import { Button } from "@components/button";
 
-interface InviteParticipantsStepProps {
+interface InviteParticipantsProps {
   emailsToInvite: string[];
   openParticipantsModal: () => void;
   openConfirmTripModal: () => void;
 }
 
-export function InviteParticipantsStep({
+export function InviteParticipants({
   emailsToInvite,
   openParticipantsModal,
   openConfirmTripModal,
-}: InviteParticipantsStepProps) {
+}: InviteParticipantsProps) {
   return (
     <div className="flex h-16 items-center gap-3 rounded-xl bg-zinc-900 px-4 shadow-shape">
       <button

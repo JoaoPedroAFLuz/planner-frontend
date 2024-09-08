@@ -7,7 +7,7 @@ import "react-day-picker/dist/style.css";
 import { Button } from "@components/button";
 import { Input } from "@components/input";
 
-interface DestinationAndDateStepProps {
+interface DestinationAndDateProps {
   isParticipantsInputVisible: boolean;
   eventStartAndEndDates: DateRange | undefined;
   setDestination: (value: string) => void;
@@ -16,14 +16,14 @@ interface DestinationAndDateStepProps {
   hideParticipantsInput: () => void;
 }
 
-export function DestinationAndDateStep({
+export function DestinationAndDate({
   isParticipantsInputVisible,
   eventStartAndEndDates,
   setDestination,
   setEventStartAndEndDates,
   showParticipantsInput,
   hideParticipantsInput,
-}: DestinationAndDateStepProps) {
+}: DestinationAndDateProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const displayedDate =
