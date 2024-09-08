@@ -103,10 +103,11 @@ export function CreateTripPage() {
     <div className="flex h-screen items-center justify-center bg-pattern bg-center bg-no-repeat">
       <div className="w-full max-w-4xl space-y-10 px-6 text-center">
         <div className="flex flex-col items-center gap-3">
-          <img src="/logo.svg" alt="plann.er" />
+          <img src="/logo.svg" alt="timely" />
 
           <p className="text-lg text-zinc-300">
-            Convide seus amigos e planeje sua próxima viagem!
+            Facilite o planejamento da sua viagem com o timely - tudo em um só
+            app.
           </p>
         </div>
 
@@ -130,7 +131,7 @@ export function CreateTripPage() {
         </div>
 
         <p className="text-sm text-zinc-500">
-          Ao planejar sua viagem pela plann.er você automaticamente concorda{" "}
+          Ao planejar sua viagem pelo time.ly você automaticamente concorda{" "}
           <br />
           com nossos{" "}
           <a href="#" className="text-zinc-300 underline">
