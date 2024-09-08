@@ -1,9 +1,7 @@
 import { format } from "date-fns";
-import { Calendar, MapPin, Settings2 } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 
 import { Trip } from "@entities/trip";
-
-import { Button } from "@components/button";
 
 interface DestinationAndDateHeaderProps {
   trip?: Trip;
@@ -31,13 +29,13 @@ export function DestinationAndDateHeader({
           <span>{displayedDate}</span>
         </div>
 
-        <div className="h-6 w-px bg-zinc-800" />
+        {/* <div className="h-6 w-px bg-zinc-800" /> */}
 
-        <Button variant="secondary">
+        {/* <Button variant="secondary">
           <span>Alterar local/data</span>
 
           <Settings2 className="size-5" />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
