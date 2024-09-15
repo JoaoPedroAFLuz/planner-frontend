@@ -15,5 +15,8 @@ export function useCreateDayActivity() {
       dayActivitiesService.create(data),
   });
 
-  return { isPending, mutateAsync };
+  return {
+    isPendingCreateDayActivity: isPending,
+    createDayActivity: mutateAsync,
+  };
 }

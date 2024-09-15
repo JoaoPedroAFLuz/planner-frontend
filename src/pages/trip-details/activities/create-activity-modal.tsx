@@ -1,13 +1,20 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Calendar, NotepadText, Tag, X } from "lucide-react";
-import { FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
+import {
+  createActivitySchema,
+  CreateActivityType,
+} from "@dtos/create-activity";
 import { useCreateDayActivity } from "@hooks/useCreateDayActivity";
 import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
 import { useTrip } from "@hooks/useTrip";
 
 import { Button } from "@components/button";
-import { Input } from "@components/input";
+import { Form } from "@components/form";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
@@ -17,32 +24,35 @@ export function CreateActivityModal({
   closeCreateActivityModal,
 }: CreateActivityModalProps) {
   const { tripCode } = useParams();
-  const { isPending, mutateAsync } = useCreateDayActivity();
-  const { refetch } = useDayActivitiesByTripCode(tripCode!);
+  const { isPendingCreateDayActivity, createDayActivity } =
+    useCreateDayActivity();
+  const { isFetchingDayActivities, refetchDayActivities } =
+    useDayActivitiesByTripCode(tripCode!);
   const { trip } = useTrip(tripCode!);
-  async function createActivity(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
 
-    const data = new FormData(event.currentTarget);
+  const form = useForm<CreateActivityType>({
+    resolver: zodResolver(createActivitySchema),
+  });
 
-    const title = data.get("title") as string;
-    const description = data.get("description") as string;
-    const occursAt = data.get("occursAt") as string;
+  const isButtonDisabled =
+    isFetchingDayActivities || isPendingCreateDayActivity;
 
-    if (!title || !occursAt) {
-      return;
+  async function createActivity(createActivityData: CreateActivityType) {
+    try {
+      await createDayActivity({
+        tripCode: tripCode!,
+        ...createActivityData,
+      });
+
+      await refetchDayActivities();
+
+      toast.success("Atividade criada com sucesso");
+      closeCreateActivityModal();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      }
     }
-
-    await mutateAsync({
-      tripCode: tripCode!,
-      title,
-      description,
-      occursAt,
-    });
-
-    await refetch();
-
-    closeCreateActivityModal();
   }
 
   return (
@@ -64,23 +74,35 @@ export function CreateActivityModal({
 
         <div className="h-px w-full bg-zinc-800" />
 
-        <form onSubmit={createActivity} className="space-y-3">
+        <Form.Root
+          form={form}
+          onSubmit={form.handleSubmit(createActivity)}
+          className="space-y-3"
+        >
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <Tag className="size-5 text-zinc-400" />
 
-            <Input name="title" size="full" placeholder="Qual a atividade?" />
+            <Form.Input
+              name="title"
+              size="full"
+              placeholder="Qual a atividade?"
+            />
           </div>
 
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <NotepadText className="size-5 text-zinc-400" />
 
-            <Input name="description" size="full" placeholder="Descrição" />
+            <Form.Input
+              name="description"
+              size="full"
+              placeholder="Descrição"
+            />
           </div>
 
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <Calendar className="size-5 text-zinc-400" />
 
-            <Input
+            <Form.Input
               name="occursAt"
               type="datetime-local"
               size="full"
@@ -90,10 +112,10 @@ export function CreateActivityModal({
             />
           </div>
 
-          <Button type="submit" size="full" disabled={isPending}>
-            {isPending ? "Cadastrando..." : "Cadastrar"}
+          <Button type="submit" size="full" disabled={isButtonDisabled}>
+            {isButtonDisabled ? "Cadastrando..." : "Cadastrar"}
           </Button>
-        </form>
+        </Form.Root>
       </div>
     </div>
   );

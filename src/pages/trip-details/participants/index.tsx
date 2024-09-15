@@ -1,7 +1,9 @@
 import { CheckCircle2, CircleDashed, UserCog } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
+import { InviteParticipantType } from "@dtos/invite-participant";
 import { useInviteParticipantToTrip } from "@hooks/useInviteParticipantToTrip";
 import { useParticipantsByTripCode } from "@hooks/useParticipantsByTripCode";
 import { useRemoveParticipantFromTrip } from "@hooks/useRemoveParticipantFromTrip";
@@ -16,35 +18,33 @@ export function Participants() {
   const { tripCode } = useParams();
   const { inviteParticipantsToTrip } = useInviteParticipantToTrip();
   const { removeParticipantFromTrip } = useRemoveParticipantFromTrip();
-  const { participants, isFetching, refetch } = useParticipantsByTripCode(
-    tripCode!,
-  );
+  const {
+    participants,
+    isFetchingGetParticipantsByTripCode,
+    refetchParticipantsByTripCode: refetchGetAllByTripCode,
+  } = useParticipantsByTripCode(tripCode!);
 
   function openManagingParticipantsModal() {
     setIsManagingParticipantsModalOpen(true);
   }
 
-  async function addEmailToInvite(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-    const emailToInvite = data.get("email") as string;
-
-    if (!emailToInvite) {
-      return console.error("Por favor, preencha o campo de e-mail");
+  async function addEmailToInvite({ email }: InviteParticipantType) {
+    if (!email) {
+      toast.error("Por favor, preencha o campo de e-mail");
+      return;
     }
 
-    if (participants.find(({ email }) => email === emailToInvite)) {
-      return console.warn("Participante com esse e-mail já foi convidado");
+    if (participants.find((participant) => participant.email === email)) {
+      toast.warn("Participante com esse e-mail já foi convidado");
+      return;
     }
-
-    event.currentTarget.reset();
 
     await inviteParticipantsToTrip({
       tripCode: tripCode!,
-      email: emailToInvite,
+      email,
     });
-    await refetch();
+
+    await refetchGetAllByTripCode();
   }
 
   async function removeParticipant(participantEmail: string) {
@@ -60,18 +60,19 @@ export function Participants() {
       tripCode: tripCode!,
       participantCode,
     });
-    await refetch();
+
+    await refetchGetAllByTripCode();
   }
 
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">Participantes</h2>
 
-      {isFetching && (
+      {isFetchingGetParticipantsByTripCode && (
         <p className="text-sm text-zinc-400">Carregando participantes...</p>
       )}
 
-      {!isFetching && (
+      {!isFetchingGetParticipantsByTripCode && (
         <div className="space-y-5">
           {participants.map((participant, index) => (
             <div

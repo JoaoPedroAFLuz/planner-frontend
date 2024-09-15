@@ -1,9 +1,11 @@
 import { ConfirmTripType } from "@dtos/confirm-trip";
 import { DestinationAndDateType } from "@dtos/destination-and-date";
+import { InviteParticipantType } from "@dtos/invite-participant";
 import { useCreateTripMutation } from "@hooks/useCreateTripMutation";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function useCreateTrip() {
   const [emailsToInvite, setEmailsToInvite] = useState<string[]>([]);
@@ -16,7 +18,7 @@ export function useCreateTrip() {
   const [destinationAndDate, setDestinationAndDate] =
     useState<DestinationAndDateType | null>(null);
 
-  const { createTripMutation } = useCreateTripMutation();
+  const { isPendingCreateTrip, createTripMutation } = useCreateTripMutation();
 
   const navigate = useNavigate();
 
@@ -40,13 +42,15 @@ export function useCreateTrip() {
     setIsConfirmTripModalOpen(false);
   }
 
-  function addEmailToInvite(email: string) {
+  function addEmailToInvite({ email }: InviteParticipantType) {
     if (!email) {
-      return console.error("Por favor, preencha o campo de e-mail");
+      toast.error("Por favor, preencha o campo de e-mail");
+      return;
     }
 
     if (emailsToInvite.includes(email)) {
-      return console.warn("E-mail já adicionado na lista");
+      toast.warn("E-mail já adicionado na lista");
+      return;
     }
 
     setEmailsToInvite((prevState) => [...prevState, email]);
@@ -92,10 +96,11 @@ export function useCreateTrip() {
         endsAt: eventStartAndEndDates?.to,
       });
 
+      toast.success("Viagem criada com sucesso!");
       navigate(`trips/${tripCode}`);
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.error(error);
+        toast.error(error.response?.data.message);
       }
     }
   }
@@ -103,6 +108,7 @@ export function useCreateTrip() {
   return {
     confirmTrip,
     emailsToInvite,
+    isPendingCreateTrip,
     isConfirmTripModalOpen,
     isParticipantsModalOpen,
     isParticipantsInputVisible,

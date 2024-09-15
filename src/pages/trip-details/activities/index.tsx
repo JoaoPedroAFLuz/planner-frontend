@@ -18,7 +18,9 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
   const [activity, setActivity] = useState<Activity | null>(null);
 
   const { tripCode } = useParams();
-  const { dayActivities, isFetching } = useDayActivitiesByTripCode(tripCode!);
+  const { dayActivities, isFetchingDayActivities } = useDayActivitiesByTripCode(
+    tripCode!,
+  );
 
   return (
     <div className="flex-1 space-y-6">
@@ -32,11 +34,11 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
         </Button>
       </div>
 
-      {isFetching && (
+      {isFetchingDayActivities && (
         <p className="text-sm text-zinc-500">Carregando programação...</p>
       )}
 
-      {!isFetching && (
+      {!isFetchingDayActivities && (
         <div className="space-y-8">
           {dayActivities.map((category) => (
             <div key={category.date} className="space-y-2">

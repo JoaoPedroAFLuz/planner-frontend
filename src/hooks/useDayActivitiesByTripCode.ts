@@ -8,5 +8,9 @@ export function useDayActivitiesByTripCode(tripCode: string) {
     queryFn: async () => dayActivitiesService.getAllByTripCode(tripCode),
   });
 
-  return { dayActivities: data || [], isFetching, refetch };
+  return {
+    dayActivities: data || [],
+    isFetchingDayActivities: isFetching,
+    refetchDayActivities: refetch,
+  };
 }

@@ -1,14 +1,16 @@
+import { useCreateTrip } from "./useCreateTrip";
+
 import { InviteParticipantsModal } from "@components/invite-participants-modal";
 import { ConfirmTripModal } from "./confirm-trip-modal";
 import { DestinationAndDate } from "./destination-and-date";
 import { InviteParticipants } from "./invite-participants";
-import { useCreateTrip } from "./useCreateTrip";
 
 export function CreateTripPage() {
   const {
     destination,
     confirmTrip,
     emailsToInvite,
+    isPendingCreateTrip,
     eventStartAndEndDates,
     isConfirmTripModalOpen,
     isParticipantsModalOpen,
@@ -80,6 +82,7 @@ export function CreateTripPage() {
         <ConfirmTripModal
           confirmTrip={confirmTrip}
           destination={destination!}
+          isPendingCreateTrip={isPendingCreateTrip}
           eventStartAndEndDates={eventStartAndEndDates!}
           onConfirmTrip={onConfirmTrip}
           closeConfirmTripModal={closeConfirmTripModal}

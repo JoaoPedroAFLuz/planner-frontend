@@ -18,7 +18,9 @@ export function ActivityDetailsModal({
   closeActivityDetailsModal,
 }: ActivityDetailsModalProps) {
   const { removeActivity } = useRemoveActivity();
-  const { refetch } = useDayActivitiesByTripCode(activity.tripCode);
+  const { refetchDayActivities } = useDayActivitiesByTripCode(
+    activity.tripCode,
+  );
 
   async function handleRemoveActivity() {
     await removeActivity({
@@ -26,7 +28,7 @@ export function ActivityDetailsModal({
       activityCode: activity.code,
     });
 
-    await refetch();
+    await refetchDayActivities();
 
     closeActivityDetailsModal();
   }

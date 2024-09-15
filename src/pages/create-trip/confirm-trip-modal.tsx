@@ -11,6 +11,7 @@ import { Form } from "@components/form";
 interface ConfirmTripModalProps {
   confirmTrip: ConfirmTripType | null;
   destination: string;
+  isPendingCreateTrip: boolean;
   eventStartAndEndDates: DateRange | undefined;
   onConfirmTrip: (data: ConfirmTripType) => void;
   closeConfirmTripModal: () => void;
@@ -19,6 +20,7 @@ interface ConfirmTripModalProps {
 export function ConfirmTripModal({
   confirmTrip,
   destination,
+  isPendingCreateTrip,
   eventStartAndEndDates,
   onConfirmTrip,
   closeConfirmTripModal,
@@ -104,8 +106,10 @@ export function ConfirmTripModal({
             />
           </div>
 
-          <Button type="submit" size="full">
-            Confirmar criação da viagem
+          <Button type="submit" size="full" disabled={isPendingCreateTrip}>
+            {isPendingCreateTrip
+              ? "Confirmando..."
+              : "Confirmar criação da viagem"}
           </Button>
         </Form.Root>
       </div>

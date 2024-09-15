@@ -8,5 +8,9 @@ export function useParticipantsByTripCode(tripCode: string) {
     queryFn: async () => participantService.getAllByTripCode(tripCode),
   });
 
-  return { participants: data || [], isFetching, refetch };
+  return {
+    participants: data || [],
+    isFetchingGetParticipantsByTripCode: isFetching,
+    refetchParticipantsByTripCode: refetch,
+  };
 }

@@ -9,6 +9,9 @@
 input {
   color-scheme: dark;
 }
+:root {
+  --toastify-color-progress-dark: #f9a8d4;
+}
 
 .rdp-root {
   --rdp-accent-color: #f9a8d4;

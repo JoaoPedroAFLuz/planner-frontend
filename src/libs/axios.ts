@@ -6,3 +6,14 @@ const API_BASE_URL =
 export const httpClient = axios.create({
   baseURL: API_BASE_URL,
 });
+
+httpClient.interceptors.response.use(
+  async (response) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);

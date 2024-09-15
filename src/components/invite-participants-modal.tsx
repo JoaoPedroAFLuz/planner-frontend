@@ -13,7 +13,7 @@ import { Form } from "./form";
 interface InviteParticipantsModalProps {
   emailsToInvite: string[];
   closeParticipantsModal: () => void;
-  addEmailToInvite: (email: string) => void;
+  addEmailToInvite: ({ email }: InviteParticipantType) => Promise<void> | void;
   removeEmailToInvite: (email: string) => void;
 }
 
@@ -27,8 +27,8 @@ export function InviteParticipantsModal({
     resolver: zodResolver(inviteParticipantSchema),
   });
 
-  function handleInviteParticipant(data: InviteParticipantType) {
-    addEmailToInvite(data.email);
+  function handleInviteParticipant({ email }: InviteParticipantType) {
+    addEmailToInvite({ email });
 
     form.reset();
   }

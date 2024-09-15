@@ -1,5 +1,7 @@
+import { AxiosError } from "axios";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { useTrip } from "@hooks/useTrip";
 
@@ -12,8 +14,9 @@ export function TripDetailsPage() {
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
     useState(false);
 
+  const navigate = useNavigate();
   const { tripCode } = useParams();
-  const { trip } = useTrip(tripCode!);
+  const { trip, errorTrip } = useTrip(tripCode!);
 
   function openCreateActivityModal() {
     setIsCreateActivityModalOpen(true);
@@ -21,6 +24,15 @@ export function TripDetailsPage() {
 
   function closeCreateActivityModal() {
     setIsCreateActivityModalOpen(false);
+  }
+
+  if (errorTrip) {
+    if (errorTrip instanceof AxiosError) {
+      toast.error(errorTrip.response?.data.message || "Erro ao buscar viagem");
+    }
+
+    navigate("/");
+    return null;
   }
 
   return (

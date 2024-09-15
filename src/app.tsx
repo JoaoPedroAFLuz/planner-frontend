@@ -3,6 +3,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { setDefaultOptions } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { CreateTripPage } from "./pages/create-trip";
 import { TripDetailsPage } from "./pages/trip-details";
@@ -31,6 +33,8 @@ export function App() {
       <RouterProvider router={router} />
 
       <ReactQueryDevtools initialIsOpen={false} />
+
+      <ToastContainer theme="dark" position="bottom-right" />
     </QueryClientProvider>
   );
 }
