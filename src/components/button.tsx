@@ -29,9 +29,19 @@ interface ButtonProps
   children: ReactNode;
 }
 
-export function Button({ variant, size, children, ...rest }: ButtonProps) {
+export function Button({
+  variant,
+  size,
+  type,
+  children,
+  ...rest
+}: ButtonProps) {
   return (
-    <button className={buttonVariants({ variant, size })} {...rest}>
+    <button
+      type={type ? type : "button"}
+      className={buttonVariants({ variant, size })}
+      {...rest}
+    >
       {children}
     </button>
   );

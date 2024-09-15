@@ -1,4 +1,4 @@
-import { httpClient } from "@/libs/axios";
+import { httpClient } from "@libs/axios";
 
 import { Trip } from "@entities/trip";
 

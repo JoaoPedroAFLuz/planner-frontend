@@ -15,11 +15,11 @@ interface CreateTripResponse {
   tripCode: string;
 }
 
-export function useCreateTrip() {
+export function useCreateTripMutation() {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (data: CreateTripProps): Promise<CreateTripResponse> =>
       tripService.create(data),
   });
 
-  return { isPending, mutateAsync };
+  return { isPendingCreateTrip: isPending, createTripMutation: mutateAsync };
 }

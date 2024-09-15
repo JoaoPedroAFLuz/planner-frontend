@@ -4,14 +4,14 @@ import { Button } from "@components/button";
 
 interface InviteParticipantsProps {
   emailsToInvite: string[];
-  openParticipantsModal: () => void;
   openConfirmTripModal: () => void;
+  openParticipantsModal: () => void;
 }
 
 export function InviteParticipants({
   emailsToInvite,
-  openParticipantsModal,
   openConfirmTripModal,
+  openParticipantsModal,
 }: InviteParticipantsProps) {
   return (
     <div className="flex h-16 items-center gap-3 rounded-xl bg-zinc-900 px-4 shadow-shape">

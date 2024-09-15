@@ -1,27 +1,52 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AtSign, User, X } from "lucide-react";
-import { FormEvent } from "react";
+import { DateRange } from "react-day-picker";
+import { useForm } from "react-hook-form";
+
+import { confirmTripSchema, ConfirmTripType } from "@dtos/confirm-trip";
 
 import { Button } from "@components/button";
-import { Input } from "@components/input";
-import { DateRange } from "react-day-picker";
+import { Form } from "@components/form";
 
 interface ConfirmTripModalProps {
+  confirmTrip: ConfirmTripType | null;
   destination: string;
-  eventStartAndEndDates?: DateRange;
-  setOwnerName: (value: string) => void;
-  setOwnerEmail: (value: string) => void;
-  createTrip: (event: FormEvent<HTMLFormElement>) => void;
+  eventStartAndEndDates: DateRange | undefined;
+  onConfirmTrip: (data: ConfirmTripType) => void;
   closeConfirmTripModal: () => void;
 }
 
 export function ConfirmTripModal({
+  confirmTrip,
   destination,
   eventStartAndEndDates,
-  setOwnerName,
-  setOwnerEmail,
-  createTrip,
+  onConfirmTrip,
   closeConfirmTripModal,
 }: ConfirmTripModalProps) {
+  const form = useForm<ConfirmTripType>({
+    resolver: zodResolver(confirmTripSchema),
+    defaultValues: {
+      ownerName: confirmTrip?.ownerName || "",
+      ownerEmail: confirmTrip?.ownerEmail || "",
+    },
+  });
+
+  const initialDate = eventStartAndEndDates!.from!.toLocaleDateString("pt-br", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  const endDate = eventStartAndEndDates!.to!.toLocaleDateString("pt-br", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  function handleConfirmTrip(data: ConfirmTripType) {
+    onConfirmTrip(data);
+  }
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
       <div className="w-[540px] space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
@@ -45,17 +70,7 @@ export function ConfirmTripModal({
             <span className="font-semibold text-zinc-100">{destination}</span>{" "}
             nas datas de{" "}
             <span className="font-semibold text-zinc-100">
-              {eventStartAndEndDates!.from!.toLocaleDateString("pt-br", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}{" "}
-              a{" "}
-              {eventStartAndEndDates!.to!.toLocaleDateString("pt-br", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+              {initialDate} a {endDate}
             </span>{" "}
             <span>preencha seus dados abaixo:</span>
           </p>
@@ -63,34 +78,36 @@ export function ConfirmTripModal({
 
         <div className="h-px w-full bg-zinc-800" />
 
-        <form onSubmit={createTrip} className="space-y-3">
+        <Form.Root
+          form={form}
+          onSubmit={form.handleSubmit(handleConfirmTrip)}
+          className="space-y-3"
+        >
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <User className="size-5 text-zinc-400" />
 
-            <Input
-              name="name"
+            <Form.Input
+              name="ownerName"
               size="full"
               placeholder="Seu nome completo"
-              onChange={(event) => setOwnerName(event.target.value)}
             />
           </div>
 
           <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
             <AtSign className="size-5 text-zinc-400" />
 
-            <Input
-              name="email"
+            <Form.Input
+              name="ownerEmail"
               type="email"
               size="full"
               placeholder="Seu e-mail pessoal"
-              onChange={(event) => setOwnerEmail(event.target.value)}
             />
           </div>
 
           <Button type="submit" size="full">
             Confirmar criação da viagem
           </Button>
-        </form>
+        </Form.Root>
       </div>
     </div>
   );

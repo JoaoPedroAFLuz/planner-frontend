@@ -1,13 +1,19 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AtSign, Plus, X } from "lucide-react";
-import { FormEvent } from "react";
+import { useForm } from "react-hook-form";
+
+import {
+  inviteParticipantSchema,
+  InviteParticipantType,
+} from "@dtos/invite-participant";
 
 import { Button } from "@components/button";
-import { Input } from "@components/input";
+import { Form } from "./form";
 
 interface InviteParticipantsModalProps {
   emailsToInvite: string[];
   closeParticipantsModal: () => void;
-  addEmailToInvite: (event: FormEvent<HTMLFormElement>) => void;
+  addEmailToInvite: (email: string) => void;
   removeEmailToInvite: (email: string) => void;
 }
 
@@ -17,6 +23,15 @@ export function InviteParticipantsModal({
   addEmailToInvite,
   removeEmailToInvite,
 }: InviteParticipantsModalProps) {
+  const form = useForm<InviteParticipantType>({
+    resolver: zodResolver(inviteParticipantSchema),
+  });
+
+  function handleInviteParticipant(data: InviteParticipantType) {
+    addEmailToInvite(data.email);
+
+    form.reset();
+  }
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
       <div className="w-[640px] space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
@@ -59,14 +74,15 @@ export function InviteParticipantsModal({
 
         <div className="h-px w-full bg-zinc-800" />
 
-        <form
-          onSubmit={addEmailToInvite}
+        <Form.Root
+          form={form}
+          onSubmit={form.handleSubmit(handleInviteParticipant)}
           className="flex items-center rounded-lg border border-zinc-800 bg-zinc-950 p-2.5"
         >
           <div className="flex flex-1 items-center gap-2 p-2">
             <AtSign className="size-5 text-zinc-400" />
 
-            <Input
+            <Form.Input
               name="email"
               type="email"
               size="full"
@@ -78,7 +94,7 @@ export function InviteParticipantsModal({
             Convidar
             <Plus className="size-5" />
           </Button>
-        </form>
+        </Form.Root>
       </div>
     </div>
   );

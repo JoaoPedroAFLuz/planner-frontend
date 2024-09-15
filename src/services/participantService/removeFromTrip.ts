@@ -1,4 +1,4 @@
-import { httpClient } from "@/libs/axios";
+import { httpClient } from "@libs/axios";
 
 interface RemoveFromTripProps {
   tripCode: string;

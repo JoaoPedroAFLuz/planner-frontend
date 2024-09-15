@@ -5,6 +5,7 @@ import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
 import { useRemoveActivity } from "@hooks/useRemoveActivity";
 
 import { Button } from "@components/button";
+import { Input } from "@components/input";
 import { Links } from "../links";
 
 interface ActivityDetailsModalProps {
@@ -49,6 +50,8 @@ export function ActivityDetailsModal({
 
         <div className="space-y-2">
           <h2 className="text-lg font-semibold">{activity.title}</h2>
+
+          <Input value={activity.title} />
 
           <p className="text-sm text-zinc-400">
             {activity.description || "Não há uma descrição para esta atividade"}
