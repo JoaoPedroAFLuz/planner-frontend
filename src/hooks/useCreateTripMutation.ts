@@ -3,10 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { tripService } from "../services/tripService";
 
 interface CreateTripProps {
-  ownerName: string;
-  ownerEmail: string;
   destination: string;
-  emailsToInvite: string[];
+  participantsEmail: string[];
   startsAt: Date;
   endsAt: Date;
 }

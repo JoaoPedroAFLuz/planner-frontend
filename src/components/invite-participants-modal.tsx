@@ -77,18 +77,19 @@ export function InviteParticipantsModal({
         <Form.Root
           form={form}
           onSubmit={form.handleSubmit(handleInviteParticipant)}
-          className="flex items-center rounded-lg border border-zinc-800 bg-zinc-950 p-2.5"
+          className="flex items-center gap-2"
         >
-          <div className="flex flex-1 items-center gap-2 p-2">
-            <AtSign className="size-5 text-zinc-400" />
-
+          <Form.Field>
             <Form.Input
               name="email"
               type="email"
               size="full"
               placeholder="Digite o e-mail do convidado"
+              autoFocus
+              leftIcon={<AtSign className="size-5 text-zinc-400" />}
+              containerClassName="bg-zinc-950 border-zinc-800"
             />
-          </div>
+          </Form.Field>
 
           <Button type="submit">
             Convidar

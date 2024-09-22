@@ -6,6 +6,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      "@contexts": "/src/contexts",
+      "@configs": "/src/configs",
       "@dtos": "/src/dtos",
       "@entities": "/src/entities",
       "@hooks": "/src/hooks",

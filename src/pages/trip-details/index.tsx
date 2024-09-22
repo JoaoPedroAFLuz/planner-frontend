@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useTrip } from "@hooks/useTrip";
@@ -37,12 +37,6 @@ export function TripDetailsPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-6 py-10">
-      <div className="flex w-full items-center justify-center">
-        <Link to="/">
-          <img src="/favicon.ico" alt="timely" className="h-8" />
-        </Link>
-      </div>
-
       <DestinationAndDateHeader trip={trip} />
 
       <main className="flex gap-16 px-4">

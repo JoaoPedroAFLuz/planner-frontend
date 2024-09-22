@@ -1,38 +1,23 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AtSign, User, X } from "lucide-react";
+import { X } from "lucide-react";
 import { DateRange } from "react-day-picker";
-import { useForm } from "react-hook-form";
-
-import { confirmTripSchema, ConfirmTripType } from "@dtos/confirm-trip";
 
 import { Button } from "@components/button";
-import { Form } from "@components/form";
 
 interface ConfirmTripModalProps {
-  confirmTrip: ConfirmTripType | null;
   destination: string;
   isPendingCreateTrip: boolean;
   eventStartAndEndDates: DateRange | undefined;
-  onConfirmTrip: (data: ConfirmTripType) => void;
+  onConfirmTrip: () => void;
   closeConfirmTripModal: () => void;
 }
 
 export function ConfirmTripModal({
-  confirmTrip,
   destination,
   isPendingCreateTrip,
   eventStartAndEndDates,
   onConfirmTrip,
   closeConfirmTripModal,
 }: ConfirmTripModalProps) {
-  const form = useForm<ConfirmTripType>({
-    resolver: zodResolver(confirmTripSchema),
-    defaultValues: {
-      ownerName: confirmTrip?.ownerName || "",
-      ownerEmail: confirmTrip?.ownerEmail || "",
-    },
-  });
-
   const initialDate = eventStartAndEndDates!.from!.toLocaleDateString("pt-br", {
     day: "numeric",
     month: "long",
@@ -44,10 +29,6 @@ export function ConfirmTripModal({
     month: "long",
     year: "numeric",
   });
-
-  function handleConfirmTrip(data: ConfirmTripType) {
-    onConfirmTrip(data);
-  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
@@ -74,44 +55,21 @@ export function ConfirmTripModal({
             <span className="font-semibold text-zinc-100">
               {initialDate} a {endDate}
             </span>{" "}
-            <span>preencha seus dados abaixo:</span>
+            <span>confirme abaixo:</span>
           </p>
         </div>
 
         <div className="h-px w-full bg-zinc-800" />
 
-        <Form.Root
-          form={form}
-          onSubmit={form.handleSubmit(handleConfirmTrip)}
-          className="space-y-3"
+        <Button
+          size="full"
+          disabled={isPendingCreateTrip}
+          onClick={onConfirmTrip}
         >
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
-            <User className="size-5 text-zinc-400" />
-
-            <Form.Input
-              name="ownerName"
-              size="full"
-              placeholder="Seu nome completo"
-            />
-          </div>
-
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
-            <AtSign className="size-5 text-zinc-400" />
-
-            <Form.Input
-              name="ownerEmail"
-              type="email"
-              size="full"
-              placeholder="Seu e-mail pessoal"
-            />
-          </div>
-
-          <Button type="submit" size="full" disabled={isPendingCreateTrip}>
-            {isPendingCreateTrip
-              ? "Confirmando..."
-              : "Confirmar criação da viagem"}
-          </Button>
-        </Form.Root>
+          {isPendingCreateTrip
+            ? "Confirmando..."
+            : "Confirmar criação da viagem"}
+        </Button>
       </div>
     </div>
   );

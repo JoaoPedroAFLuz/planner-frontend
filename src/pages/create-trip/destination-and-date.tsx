@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
+import { ArrowRight, MapPin, Settings2 } from "lucide-react";
 import { useState } from "react";
 import "react-day-picker/dist/style.css";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@components/button";
 import { Form } from "@components/form";
+import { twMerge } from "tailwind-merge";
 
 interface DestinationAnDateProps {
   isParticipantsInputVisible: boolean;
@@ -29,6 +30,10 @@ export function DestinationAndDate({
   const form = useForm<DestinationAndDateType>({
     resolver: zodResolver(destinationAndDateSchema),
   });
+
+  const hasErros =
+    form.formState.errors?.destination ||
+    form.formState.errors?.eventStartAndEndDates;
 
   const initialDate = form.getValues("eventStartAndEndDates.from");
   const finalDate = form.getValues("eventStartAndEndDates.to");
@@ -54,31 +59,30 @@ export function DestinationAndDate({
     <Form.Root
       form={form}
       onSubmit={form.handleSubmit(handleSubmit)}
-      className="flex h-16 items-center gap-3 rounded-xl bg-zinc-900 px-4 shadow-shape"
+      className={twMerge(
+        "flex h-16 items-center gap-3 rounded-xl bg-zinc-900 px-4 shadow-shape",
+        hasErros && "h-20",
+      )}
     >
-      <div className="flex flex-1 items-center gap-2">
-        <MapPin className="size-5 text-zinc-400" />
-
+      <Form.Field className="flex-1">
         <Form.Input
           name="destination"
           size="full"
           placeholder="Para onde você vai?"
           disabled={isParticipantsInputVisible}
-          autoFocus
+          leftIcon={<MapPin className="size-5 text-zinc-400" />}
+          containerClassName="border-zinc-900"
         />
-      </div>
 
-      <button
-        onClick={openDatePicker}
-        disabled={isParticipantsInputVisible}
-        className="flex w-[250px] items-center gap-2 text-left"
-      >
-        <Calendar className="size-5 text-zinc-400" />
+        <Form.ErrorMessage field="destination" />
+      </Form.Field>
 
-        <span className="w-40 flex-1 text-lg text-zinc-400">
-          {displayedDate}
-        </span>
-      </button>
+      <Form.DatePickerButton
+        name="eventStartAndEndDates"
+        displayedDate={displayedDate}
+        isDisabled={isParticipantsInputVisible}
+        openDatePicker={openDatePicker}
+      />
 
       {isDatePickerOpen && (
         <Form.DatePicker

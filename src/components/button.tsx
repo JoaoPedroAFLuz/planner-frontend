@@ -1,8 +1,9 @@
 import { ComponentProps, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
 
 const buttonVariants = tv({
-  base: "flex items-center justify-center gap-2 rounded-lg px-5 py-2 font-medium",
+  base: "flex h-11 items-center justify-center gap-2 rounded-lg px-5 py-2 font-medium",
 
   variants: {
     variant: {
@@ -14,7 +15,7 @@ const buttonVariants = tv({
 
     size: {
       default: "py-2",
-      full: "w-full h-11",
+      full: "w-full",
     },
   },
 
@@ -35,6 +36,7 @@ export function Button({
   size,
   type,
   disabled,
+  className,
   children,
   ...rest
 }: ButtonProps) {
@@ -42,10 +44,13 @@ export function Button({
     <button
       type={type ? type : "button"}
       disabled={disabled}
-      className={buttonVariants({
-        variant: disabled ? "disabled" : variant,
-        size,
-      })}
+      className={twMerge(
+        buttonVariants({
+          variant: disabled ? "disabled" : variant,
+          size,
+        }),
+        className,
+      )}
       {...rest}
     >
       {children}

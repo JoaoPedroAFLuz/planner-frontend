@@ -1,4 +1,3 @@
-import { ConfirmTripType } from "@dtos/confirm-trip";
 import { DestinationAndDateType } from "@dtos/destination-and-date";
 import { InviteParticipantType } from "@dtos/invite-participant";
 import { useCreateTripMutation } from "@hooks/useCreateTripMutation";
@@ -8,13 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export function useCreateTrip() {
-  const [emailsToInvite, setEmailsToInvite] = useState<string[]>([]);
+  const [participantsEmail, setParticipantsEmail] = useState<string[]>([]);
   const [isParticipantsModalOpen, setIsParticipantsModalOpen] = useState(false);
   const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
   const [isParticipantsInputVisible, setIsParticipantsInputVisible] =
     useState(false);
 
-  const [confirmTrip, setConfirmTrip] = useState<ConfirmTripType | null>(null);
   const [destinationAndDate, setDestinationAndDate] =
     useState<DestinationAndDateType | null>(null);
 
@@ -48,16 +46,16 @@ export function useCreateTrip() {
       return;
     }
 
-    if (emailsToInvite.includes(email)) {
+    if (participantsEmail.includes(email)) {
       toast.warn("E-mail já adicionado na lista");
       return;
     }
 
-    setEmailsToInvite((prevState) => [...prevState, email]);
+    setParticipantsEmail((prevState) => [...prevState, email]);
   }
 
   function removeEmailToInvite(emailToRemove: string) {
-    setEmailsToInvite((prevState) =>
+    setParticipantsEmail((prevState) =>
       prevState.filter((emailToInvite) => emailToInvite !== emailToRemove),
     );
   }
@@ -69,29 +67,23 @@ export function useCreateTrip() {
     setIsParticipantsInputVisible(true);
   }
 
-  async function onConfirmTrip(confirmTripData: ConfirmTripType) {
-    setConfirmTrip(confirmTripData);
-
-    await createTrip(confirmTripData);
+  async function onConfirmTrip() {
+    await createTrip();
 
     closeConfirmTripModal();
   }
 
-  async function createTrip(confirmTripData: ConfirmTripType) {
+  async function createTrip() {
     try {
-      if (!destinationAndDate || !confirmTripData) {
+      if (!destinationAndDate) {
         return null;
       }
 
       const { destination, eventStartAndEndDates } = destinationAndDate;
 
-      const { ownerName, ownerEmail } = confirmTripData;
-
       const { tripCode } = await createTripMutation({
-        ownerName,
-        ownerEmail,
         destination,
-        emailsToInvite,
+        participantsEmail,
         startsAt: eventStartAndEndDates?.from,
         endsAt: eventStartAndEndDates?.to,
       });
@@ -106,8 +98,7 @@ export function useCreateTrip() {
   }
 
   return {
-    confirmTrip,
-    emailsToInvite,
+    participantsEmail,
     isPendingCreateTrip,
     isConfirmTripModalOpen,
     isParticipantsModalOpen,

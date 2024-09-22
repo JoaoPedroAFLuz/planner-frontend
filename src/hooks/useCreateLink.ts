@@ -13,5 +13,8 @@ export function useCreateLink() {
     mutationFn: async (data: CreateLinkProps) => linkService.create(data),
   });
 
-  return { isPending, mutateAsync };
+  return {
+    isCreateLinkPending: isPending,
+    createLink: mutateAsync,
+  };
 }

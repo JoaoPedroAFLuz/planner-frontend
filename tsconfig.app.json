@@ -9,6 +9,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@contexts/*": ["./src/contexts/*"],
+      "@configs/*": ["./src/configs/*"],
       "@dtos/*": ["./src/dtos/*"],
       "@entities/*": ["./src/entities/*"],
       "@hooks/*": ["./src/hooks/*"],

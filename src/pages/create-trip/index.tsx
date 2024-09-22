@@ -8,8 +8,7 @@ import { InviteParticipants } from "./invite-participants";
 export function CreateTripPage() {
   const {
     destination,
-    confirmTrip,
-    emailsToInvite,
+    participantsEmail,
     isPendingCreateTrip,
     eventStartAndEndDates,
     isConfirmTripModalOpen,
@@ -27,7 +26,7 @@ export function CreateTripPage() {
   } = useCreateTrip();
 
   return (
-    <div className="flex h-screen items-center justify-center bg-pattern bg-center bg-no-repeat">
+    <div className="flex h-full flex-1 items-center justify-center bg-pattern bg-center bg-no-repeat">
       <div className="w-full max-w-4xl space-y-10 px-6 text-center">
         <div className="flex flex-col items-center gap-3">
           <img src="/logo.svg" alt="timely" />
@@ -47,7 +46,7 @@ export function CreateTripPage() {
 
           {isParticipantsInputVisible && (
             <InviteParticipants
-              emailsToInvite={emailsToInvite}
+              participantsEmail={participantsEmail}
               openConfirmTripModal={openConfirmTripModal}
               openParticipantsModal={openParticipantsModal}
             />
@@ -71,7 +70,7 @@ export function CreateTripPage() {
 
       {isParticipantsModalOpen && (
         <InviteParticipantsModal
-          emailsToInvite={emailsToInvite}
+          emailsToInvite={participantsEmail}
           addEmailToInvite={addEmailToInvite}
           removeEmailToInvite={removeEmailToInvite}
           closeParticipantsModal={closeParticipantsModal}
@@ -80,7 +79,6 @@ export function CreateTripPage() {
 
       {isConfirmTripModalOpen && (
         <ConfirmTripModal
-          confirmTrip={confirmTrip}
           destination={destination!}
           isPendingCreateTrip={isPendingCreateTrip}
           eventStartAndEndDates={eventStartAndEndDates!}

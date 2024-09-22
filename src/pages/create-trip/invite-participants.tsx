@@ -3,13 +3,13 @@ import { ArrowRight, UserRoundPlus } from "lucide-react";
 import { Button } from "@components/button";
 
 interface InviteParticipantsProps {
-  emailsToInvite: string[];
+  participantsEmail: string[];
   openConfirmTripModal: () => void;
   openParticipantsModal: () => void;
 }
 
 export function InviteParticipants({
-  emailsToInvite,
+  participantsEmail,
   openConfirmTripModal,
   openParticipantsModal,
 }: InviteParticipantsProps) {
@@ -22,9 +22,9 @@ export function InviteParticipants({
       >
         <UserRoundPlus className="size-5 text-zinc-400" />
 
-        {emailsToInvite.length > 0 ? (
-          emailsToInvite.length > 1 ? (
-            <span>{`${emailsToInvite.length} pessoas convidadas`}</span>
+        {participantsEmail.length > 0 ? (
+          participantsEmail.length > 1 ? (
+            <span>{`${participantsEmail.length} pessoas convidadas`}</span>
           ) : (
             <span>1 pessoa convidada</span>
           )

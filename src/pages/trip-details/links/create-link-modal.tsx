@@ -1,11 +1,13 @@
 import { Link2, Tag, X } from "lucide-react";
-import { FormEvent } from "react";
 
 import { useCreateLink } from "@hooks/useCreateLink";
 import { useLinksByActivityCode } from "@hooks/useLinksByActivityCode";
 
 import { Button } from "@components/button";
-import { Input } from "@components/input";
+import { Form } from "@components/form";
+import { createLinkSchema, CreateLinkType } from "@dtos/create-link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 interface CreateLinkModalProps {
   activityCode: string;
@@ -16,21 +18,17 @@ export function CreateLinkModal({
   activityCode,
   closeCreateLinkModal,
 }: CreateLinkModalProps) {
-  const { isPending, mutateAsync } = useCreateLink();
+  const { isCreateLinkPending, createLink } = useCreateLink();
   const { refetch } = useLinksByActivityCode(activityCode);
 
-  async function createLink(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const form = useForm<CreateLinkType>({
+    resolver: zodResolver(createLinkSchema),
+  });
 
-    const data = new FormData(event.currentTarget);
-
-    const title = data.get("title") as string;
-    const url = data.get("url") as string;
-
-    await mutateAsync({
+  async function handleCreateLink(data: CreateLinkType) {
+    await createLink({
       activityCode,
-      title,
-      url,
+      ...data,
     });
 
     await refetch();
@@ -57,23 +55,39 @@ export function CreateLinkModal({
 
         <div className="h-px w-full bg-zinc-800" />
 
-        <form onSubmit={createLink} className="space-y-3">
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
-            <Tag className="size-5 text-zinc-400" />
+        <Form.Root
+          form={form}
+          onSubmit={form.handleSubmit(handleCreateLink)}
+          className="space-y-4"
+        >
+          <Form.Field>
+            <Form.Input
+              name="title"
+              size="full"
+              placeholder="Título"
+              leftIcon={<Tag className="size-5 text-zinc-400" />}
+              containerClassName="bg-zinc-950 border-zinc-800"
+            />
 
-            <Input name="title" size="full" placeholder="Título" />
-          </div>
+            <Form.ErrorMessage field="title" />
+          </Form.Field>
 
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
-            <Link2 className="size-5 text-zinc-400" />
+          <Form.Field>
+            <Form.Input
+              name="url"
+              size="full"
+              placeholder="Url"
+              leftIcon={<Link2 className="size-5 text-zinc-400" />}
+              containerClassName="bg-zinc-950 border-zinc-800"
+            />
 
-            <Input name="url" size="full" placeholder="Url" />
-          </div>
+            <Form.ErrorMessage field="url" />
+          </Form.Field>
 
-          <Button type="submit" size="full" disabled={isPending}>
-            {isPending ? "Cadastrando..." : "Cadastrar"}
+          <Button type="submit" size="full" disabled={isCreateLinkPending}>
+            {isCreateLinkPending ? "Cadastrando..." : "Cadastrar"}
           </Button>
-        </form>
+        </Form.Root>
       </div>
     </div>
   );

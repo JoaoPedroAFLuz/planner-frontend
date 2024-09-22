@@ -79,29 +79,27 @@ export function CreateActivityModal({
           onSubmit={form.handleSubmit(createActivity)}
           className="space-y-3"
         >
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
-            <Tag className="size-5 text-zinc-400" />
-
+          <Form.Field>
             <Form.Input
               name="title"
               size="full"
               placeholder="Qual a atividade?"
+              leftIcon={<Tag className="size-5 text-zinc-400" />}
+              containerClassName="bg-zinc-950 border-zinc-800"
             />
-          </div>
+          </Form.Field>
 
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
-            <NotepadText className="size-5 text-zinc-400" />
-
+          <Form.Field>
             <Form.Input
               name="description"
               size="full"
               placeholder="Descrição"
+              leftIcon={<NotepadText className="size-5 text-zinc-400" />}
+              containerClassName="bg-zinc-950 border-zinc-800"
             />
-          </div>
+          </Form.Field>
 
-          <div className="flex h-14 flex-1 items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4">
-            <Calendar className="size-5 text-zinc-400" />
-
+          <Form.Field>
             <Form.Input
               name="occursAt"
               type="datetime-local"
@@ -109,8 +107,10 @@ export function CreateActivityModal({
               placeholder="Data"
               min={trip!.startsAt}
               max={trip!.endsAt}
+              leftIcon={<Calendar className="size-5 text-zinc-400" />}
+              containerClassName="bg-zinc-950 border-zinc-800"
             />
-          </div>
+          </Form.Field>
 
           <Button type="submit" size="full" disabled={isButtonDisabled}>
             {isButtonDisabled ? "Cadastrando..." : "Cadastrar"}

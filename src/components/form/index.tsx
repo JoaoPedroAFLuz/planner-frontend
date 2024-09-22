@@ -1,9 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormHTMLAttributes } from "react";
 import { FieldValues, FormProvider, UseFormReturn } from "react-hook-form";
 
 import { DatePicker } from "./date-picker";
+import { DatePickerButton } from "./date-picker-button";
+import { ErrorMessage } from "./error-message";
+import { Field } from "./field";
 import { Input } from "./input";
+import { PasswordInput } from "./password-input";
 
 interface RootProps<T extends FieldValues>
   extends FormHTMLAttributes<HTMLFormElement> {
@@ -25,6 +28,10 @@ function Root<T extends FieldValues>({ form, ...props }: RootProps<T>) {
 
 export const Form = {
   Root,
+  Field,
   Input,
   DatePicker,
+  ErrorMessage,
+  PasswordInput,
+  DatePickerButton,
 };

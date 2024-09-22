@@ -9,6 +9,6 @@ const ApiFormErrorsContext = createContext<ApiFormErrorsContextProps<any>>(
   {} as ApiFormErrorsContextProps<any>,
 );
 
-export function useApiFormError() {
+export function useApiFormErrors() {
   return useContext(ApiFormErrorsContext);
 }

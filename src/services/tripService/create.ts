@@ -1,10 +1,8 @@
 import { httpClient } from "@libs/axios";
 
 interface CreateTripProps {
-  ownerName: string;
-  ownerEmail: string;
   destination: string;
-  emailsToInvite: string[];
+  participantsEmail: string[];
   startsAt: Date;
   endsAt: Date;
 }
@@ -14,18 +12,14 @@ interface CreateTripResponse {
 }
 
 export async function create({
-  ownerName,
-  ownerEmail,
   destination,
-  emailsToInvite,
+  participantsEmail,
   startsAt,
   endsAt,
 }: CreateTripProps) {
   const { data } = await httpClient.post<CreateTripResponse>("/trips", {
-    ownerName,
-    ownerEmail,
     destination,
-    emailsToInvite,
+    participantsEmail,
     startsAt,
     endsAt,
   });
