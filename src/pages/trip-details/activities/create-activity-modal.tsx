@@ -4,55 +4,42 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
 import {
-  createActivitySchema,
   CreateActivityType,
+  createActivitySchema,
 } from "@dtos/create-activity";
-import { useCreateDayActivity } from "@hooks/useCreateDayActivity";
-import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
+import { Activity } from "@entities/activity";
 import { useTrip } from "@hooks/useTrip";
 
 import { Button } from "@components/button";
 import { Form } from "@components/form";
-import { AxiosError } from "axios";
-import { toast } from "react-toastify";
 
 interface CreateActivityModalProps {
+  activity?: Activity;
+  isButtonDisabled: boolean;
+  onSubmit: (createActivityData: CreateActivityType) => Promise<void>;
   closeCreateActivityModal: () => void;
 }
 
 export function CreateActivityModal({
+  activity,
+  isButtonDisabled,
+  onSubmit,
   closeCreateActivityModal,
 }: CreateActivityModalProps) {
   const { tripCode } = useParams();
-  const { isPendingCreateDayActivity, createDayActivity } =
-    useCreateDayActivity();
-  const { isFetchingDayActivities, refetchDayActivities } =
-    useDayActivitiesByTripCode(tripCode!);
   const { trip } = useTrip(tripCode!);
 
   const form = useForm<CreateActivityType>({
     resolver: zodResolver(createActivitySchema),
+    defaultValues: {
+      title: activity?.title,
+      description: activity?.description,
+      occursAt: activity?.occursAt,
+    },
   });
 
-  const isButtonDisabled =
-    isFetchingDayActivities || isPendingCreateDayActivity;
-
   async function createActivity(createActivityData: CreateActivityType) {
-    try {
-      await createDayActivity({
-        tripCode: tripCode!,
-        ...createActivityData,
-      });
-
-      await refetchDayActivities();
-
-      toast.success("Atividade criada com sucesso");
-      closeCreateActivityModal();
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
-      }
-    }
+    await onSubmit(createActivityData);
   }
 
   return (
@@ -60,7 +47,9 @@ export function CreateActivityModal({
       <div className="w-[540px] space-y-5 rounded-xl bg-zinc-900 px-6 py-5 shadow-shape">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Cadastrar atividade</h2>
+            <h2 className="text-lg font-semibold">
+              {`${!activity ? "Cadastrar" : "Editar"} atividade`}
+            </h2>
 
             <button type="button" onClick={closeCreateActivityModal}>
               <X className="size-5 cursor-pointer text-zinc-400" />
@@ -113,7 +102,7 @@ export function CreateActivityModal({
           </Form.Field>
 
           <Button type="submit" size="full" disabled={isButtonDisabled}>
-            {isButtonDisabled ? "Cadastrando..." : "Cadastrar"}
+            {!activity ? "Cadastrar" : "Editar"}
           </Button>
         </Form.Root>
       </div>

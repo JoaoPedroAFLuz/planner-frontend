@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { CreateActivityType } from "@dtos/create-activity";
+import { useCreateActivity } from "@hooks/useCreateActivity";
+import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
 import { useTrip } from "@hooks/useTrip";
 
 import { Activities } from "./activities";
@@ -18,12 +21,37 @@ export function TripDetailsPage() {
   const { tripCode } = useParams();
   const { trip, errorTrip } = useTrip(tripCode!);
 
+  const { isPendingCreateDayActivity, createDayActivity } = useCreateActivity();
+  const { isFetchingDayActivities, refetchDayActivities } =
+    useDayActivitiesByTripCode(tripCode!);
+
+  const isButtonDisabled =
+    isFetchingDayActivities || isPendingCreateDayActivity;
+
   function openCreateActivityModal() {
     setIsCreateActivityModalOpen(true);
   }
 
   function closeCreateActivityModal() {
     setIsCreateActivityModalOpen(false);
+  }
+
+  async function handleCreateActivity(createActivityData: CreateActivityType) {
+    try {
+      await createDayActivity({
+        tripCode: tripCode!,
+        ...createActivityData,
+      });
+
+      await refetchDayActivities();
+
+      toast.success("Atividade criada com sucesso");
+      closeCreateActivityModal();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      }
+    }
   }
 
   if (errorTrip) {
@@ -49,6 +77,8 @@ export function TripDetailsPage() {
 
       {isCreateActivityModalOpen && (
         <CreateActivityModal
+          isButtonDisabled={isButtonDisabled}
+          onSubmit={handleCreateActivity}
           closeCreateActivityModal={closeCreateActivityModal}
         />
       )}

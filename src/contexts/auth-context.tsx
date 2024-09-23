@@ -94,7 +94,6 @@ export function AuthProvider({ children }: AuthContextProps) {
         }
 
         if (error.response?.status !== 401 || !refreshToken) {
-          localStorage.clear();
           return Promise.reject(error);
         }
 

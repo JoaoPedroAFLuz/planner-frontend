@@ -1,6 +1,6 @@
 import { httpClient } from "@libs/axios";
 
-interface CreateLinkProps {
+interface CreateActivityProps {
   tripCode: string;
   title: string;
   description?: string;
@@ -12,7 +12,7 @@ export async function create({
   title,
   description,
   occursAt,
-}: CreateLinkProps) {
+}: CreateActivityProps) {
   await httpClient.post(`/trips/${tripCode}/activities`, {
     title,
     description,

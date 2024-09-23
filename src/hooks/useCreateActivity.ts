@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { dayActivitiesService } from "../services/dayActivitiesService";
+import { activityService } from "@services/activityService";
 
 interface CreateActivityProps {
   tripCode: string;
@@ -9,10 +9,10 @@ interface CreateActivityProps {
   occursAt: string;
 }
 
-export function useCreateDayActivity() {
+export function useCreateActivity() {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: async (data: CreateActivityProps) =>
-      dayActivitiesService.create(data),
+      activityService.create(data),
   });
 
   return {
