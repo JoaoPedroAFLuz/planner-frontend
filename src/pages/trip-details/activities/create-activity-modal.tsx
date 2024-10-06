@@ -3,18 +3,18 @@ import { Calendar, NotepadText, Tag, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
+import { ActivityDTO } from "@dtos/activity";
 import {
   CreateActivityType,
   createActivitySchema,
 } from "@dtos/create-activity";
-import { Activity } from "@entities/activity";
 import { useTrip } from "@hooks/use-trip";
 
 import { Button } from "@components/button";
 import { Form } from "@components/form";
 
 interface CreateActivityModalProps {
-  activity?: Activity;
+  activity?: ActivityDTO;
   isButtonDisabled: boolean;
   onSubmit: (createActivityData: CreateActivityType) => Promise<void>;
   closeCreateActivityModal: () => void;

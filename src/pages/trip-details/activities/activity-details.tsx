@@ -1,10 +1,11 @@
 import { AxiosError } from "axios";
+import { format } from "date-fns";
 import { SquarePen, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
+import { ActivityDTO } from "@dtos/activity";
 import { CreateActivityType } from "@dtos/create-activity";
-import { Activity } from "@entities/activity";
 import { useDayActivitiesByTripCode } from "@hooks/use-day-activities-by-trip-code";
 import { useRemoveActivity } from "@hooks/use-remove-activity";
 import { useUpdateActivity } from "@hooks/use-update-trip";
@@ -14,7 +15,7 @@ import { Links } from "../links";
 import { CreateActivityModal } from "./create-activity-modal";
 
 interface ActivityDetailsModalProps {
-  activity: Activity;
+  activity: ActivityDTO;
   closeActivityDetailsModal: () => void;
 }
 
@@ -97,7 +98,11 @@ export function ActivityDetailsModal({
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-lg font-semibold">{activity.title}</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">{activity.title}</h2>
+
+            <span className="text-sm text-zinc-400">{`${format(activity.occursAt, "HH'h'mm")}`}</span>
+          </div>
 
           <p className="text-sm text-zinc-400">
             {activity.description || "Não há uma descrição para esta atividade"}

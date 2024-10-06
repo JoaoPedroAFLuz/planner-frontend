@@ -1,9 +1,9 @@
 import { httpClient } from "@libs/axios";
 
-import { Participant } from "@entities/participant";
+import { TripParticipantDTO } from "@dtos/trip-participant";
 
 export async function getAllByTripCode(tripCode: string) {
-  const { data } = await httpClient.get<Participant[]>(
+  const { data } = await httpClient.get<TripParticipantDTO[]>(
     `/trips/${tripCode}/participants`,
   );
 

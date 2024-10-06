@@ -1,9 +1,9 @@
 import { httpClient } from "@libs/axios";
 
-import { Link } from "@entities/link";
+import { LinkDTO } from "@dtos/link";
 
 export async function getAllByActivityCode(activityCode: string) {
-  const { data } = await httpClient.get<Link[]>(
+  const { data } = await httpClient.get<LinkDTO[]>(
     `activities/${activityCode}/links`,
   );
 

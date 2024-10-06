@@ -4,7 +4,7 @@ import { CircleCheck, Plus } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Activity } from "@entities/activity";
+import { ActivityDTO } from "@dtos/activity";
 import { useDayActivitiesByTripCode } from "@hooks/use-day-activities-by-trip-code";
 
 import { Button } from "@components/button";
@@ -15,7 +15,7 @@ interface ActivitiesProps {
 }
 
 export function Activities({ openCreateActivityModal }: ActivitiesProps) {
-  const [activity, setActivity] = useState<Activity | null>(null);
+  const [activity, setActivity] = useState<ActivityDTO | null>(null);
 
   const { tripCode } = useParams();
   const { dayActivities, isFetchingDayActivities } = useDayActivitiesByTripCode(
@@ -72,7 +72,7 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
                         <span className="text-zinc-100">{activity.title}</span>
 
                         <span className="ml-auto text-sm text-zinc-400">
-                          {`${format(activity.occursAt, "HH:mm")}h`}
+                          {`${format(activity.occursAt, "HH'h'mm")}`}
                         </span>
                       </div>
                     </div>
