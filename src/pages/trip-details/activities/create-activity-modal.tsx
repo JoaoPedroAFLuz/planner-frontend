@@ -8,7 +8,7 @@ import {
   createActivitySchema,
 } from "@dtos/create-activity";
 import { Activity } from "@entities/activity";
-import { useTrip } from "@hooks/useTrip";
+import { useTrip } from "@hooks/use-trip";
 
 import { Button } from "@components/button";
 import { Form } from "@components/form";

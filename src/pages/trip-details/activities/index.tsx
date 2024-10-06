@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Activity } from "@entities/activity";
-import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
+import { useDayActivitiesByTripCode } from "@hooks/use-day-activities-by-trip-code";
 
 import { Button } from "@components/button";
 import { ActivityDetailsModal } from "./activity-details";

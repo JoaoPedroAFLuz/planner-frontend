@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 
 import { CreateActivityType } from "@dtos/create-activity";
 import { Activity } from "@entities/activity";
-import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
-import { useRemoveActivity } from "@hooks/useRemoveActivity";
-import { useUpdateActivity } from "@hooks/useUpdateActivity";
+import { useDayActivitiesByTripCode } from "@hooks/use-day-activities-by-trip-code";
+import { useRemoveActivity } from "@hooks/use-remove-activity";
+import { useUpdateActivity } from "@hooks/use-update-trip";
 
 import { Button } from "@components/button";
 import { Links } from "../links";

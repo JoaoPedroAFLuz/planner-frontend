@@ -1,6 +1,6 @@
 export interface Link {
+  code: string;
   tripCode: string;
-  linkCode: string;
   title: string;
   url: string;
 }

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { linkService } from "../services/linkService";
+import { linkService } from "../services/link-service";
 
 interface CreateLinkProps {
   activityCode: string;

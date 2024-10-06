@@ -8,7 +8,7 @@ import { loginSchema, LoginType } from "@dtos/login";
 
 import { Button } from "@components/button";
 import { Form } from "@components/form";
-import { useAuth } from "@hooks/user-auth";
+import { useAuth } from "@hooks/use-auth";
 
 export function Login() {
   const form = useForm<LoginType>({

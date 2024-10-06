@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { LoginProps } from "@dtos/login";
-import { authService } from "@services/authService";
+import { authService } from "@services/auth-service";
 
 export function useLogin() {
   const { isPending, mutateAsync } = useMutation({

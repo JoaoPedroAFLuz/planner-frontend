@@ -1,10 +1,10 @@
 import { format } from "date-fns";
 import { Calendar, MapPin } from "lucide-react";
 
-import { Trip } from "@entities/trip";
+import { TripDTO } from "@dtos/trip";
 
 interface DestinationAndDateHeaderProps {
-  trip?: Trip;
+  trip?: TripDTO;
 }
 
 export function DestinationAndDateHeader({

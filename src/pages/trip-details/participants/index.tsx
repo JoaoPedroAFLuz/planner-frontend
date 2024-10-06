@@ -4,14 +4,19 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { InviteParticipantType } from "@dtos/invite-participant";
-import { useInviteParticipantToTrip } from "@hooks/useInviteParticipantToTrip";
-import { useParticipantsByTripCode } from "@hooks/useParticipantsByTripCode";
-import { useRemoveParticipantFromTrip } from "@hooks/useRemoveParticipantFromTrip";
+import { useInviteParticipantToTrip } from "@hooks/use-invite-participants";
+import { useParticipantsByTripCode } from "@hooks/use-participants-by-trip-code";
+import { useRemoveParticipantFromTrip } from "@hooks/use-remove-participant";
 
 import { Button } from "@components/button";
 import { InviteParticipantsModal } from "@components/invite-participants-modal";
+import { UserDTO } from "@dtos/user";
 
-export function Participants() {
+interface ParticipantsProps {
+  owner?: UserDTO;
+}
+
+export function Participants({ owner }: ParticipantsProps) {
   const [isManagingParticipantsModalOpen, setIsManagingParticipantsModalOpen] =
     useState(false);
 
@@ -67,6 +72,24 @@ export function Participants() {
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">Participantes</h2>
+
+      {owner && (
+        <div className="space-y-5">
+          <div className="flex items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <span className="block font-medium text-zinc-100">
+                {owner.name || `Dono`}
+              </span>
+
+              <span className="block truncate text-sm text-zinc-400">
+                {owner.email}
+              </span>
+            </div>
+
+            <CheckCircle2 className="size-5 shrink-0 text-pink-400" />
+          </div>
+        </div>
+      )}
 
       {isFetchingGetParticipantsByTripCode && (
         <p className="text-sm text-zinc-400">Carregando participantes...</p>

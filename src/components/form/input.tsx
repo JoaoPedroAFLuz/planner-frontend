@@ -2,7 +2,7 @@ import { ComponentProps, ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { tv, VariantProps } from "tailwind-variants";
 
-import { useApiFormErrors } from "@hooks/use-api-form-error";
+import { useApiFormErrors } from "@hooks/use-api-form-errors";
 import { twMerge } from "tailwind-merge";
 
 const inputVariants = tv({

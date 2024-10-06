@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { tripService } from "../services/tripService";
+import { tripService } from "../services/trip-service";
 
 interface CreateTripProps {
   destination: string;

@@ -1,4 +1,4 @@
-import { useCreateTrip } from "./useCreateTrip";
+import { useCreateTrip } from "./use-create-trip";
 
 import { InviteParticipantsModal } from "@components/invite-participants-modal";
 import { ConfirmTripModal } from "./confirm-trip-modal";

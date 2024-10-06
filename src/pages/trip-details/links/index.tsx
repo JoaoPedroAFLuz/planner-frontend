@@ -1,8 +1,8 @@
 import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
 
-import { useLinksByActivityCode } from "@hooks/useLinksByActivityCode";
-import { useRemoveLink } from "@hooks/useRemoveLink";
+import { useLinksByActivityCode } from "@hooks/use-links-by-activity-code";
+import { useRemoveLink } from "@hooks/use-remove-link";
 
 import { Button } from "@components/button";
 import { CreateLinkModal } from "./create-link-modal";
@@ -14,8 +14,9 @@ interface LinksProps {
 export function Links({ activityCode }: LinksProps) {
   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
 
-  const { links, isFetching, refetch } = useLinksByActivityCode(activityCode);
-  const { removeLink } = useRemoveLink();
+  const { links, isFetchingLinks, refetchLinks } =
+    useLinksByActivityCode(activityCode);
+  const { removeLink, isPendingRemoveLink } = useRemoveLink();
 
   function openCreateLinkModal() {
     setIsCreateLinkModalOpen(true);
@@ -27,7 +28,7 @@ export function Links({ activityCode }: LinksProps) {
 
   async function handleRemoveLink(linkCode: string) {
     await removeLink({ activityCode, linkCode });
-    await refetch();
+    await refetchLinks();
   }
 
   return (
@@ -35,11 +36,11 @@ export function Links({ activityCode }: LinksProps) {
       <div className="space-y-2">
         <h2 className="text-lg font-semibold">Links</h2>
 
-        {isFetching && (
+        {isFetchingLinks && (
           <p className="text-sm text-zinc-400">Carregando links...</p>
         )}
 
-        {!isFetching && (
+        {!isFetchingLinks && (
           <div className="space-y-5">
             {links.length === 0 && (
               <p className="text-sm text-zinc-400">
@@ -50,7 +51,7 @@ export function Links({ activityCode }: LinksProps) {
             {links.length > 0 &&
               links.map((link) => (
                 <div
-                  key={link.linkCode}
+                  key={link.code}
                   className="flex items-center justify-between gap-4"
                 >
                   <div className="space-y-1.5">
@@ -69,8 +70,9 @@ export function Links({ activityCode }: LinksProps) {
                   </div>
 
                   <button
-                    className="rounded-full p-1 hover:bg-zinc-800"
-                    onClick={() => handleRemoveLink(link.linkCode)}
+                    className="rounded-full p-1 hover:bg-zinc-800 disabled:hover:bg-zinc-900"
+                    onClick={() => handleRemoveLink(link.code)}
+                    disabled={isPendingRemoveLink}
                   >
                     <Trash className="size-5 shrink-0 text-zinc-400" />
                   </button>

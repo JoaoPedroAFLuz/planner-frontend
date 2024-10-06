@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { setDefaultOptions } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ToastContainer } from "react-toastify";
@@ -30,7 +29,7 @@ export function App() {
         <Router />
       </AuthProvider>
 
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false}  /> */}
 
       <ToastContainer theme="dark" position="bottom-right" />
     </QueryClientProvider>

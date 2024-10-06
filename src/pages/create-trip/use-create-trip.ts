@@ -1,10 +1,11 @@
-import { DestinationAndDateType } from "@dtos/destination-and-date";
-import { InviteParticipantType } from "@dtos/invite-participant";
-import { useCreateTripMutation } from "@hooks/useCreateTripMutation";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import { DestinationAndDateType } from "@dtos/destination-and-date";
+import { InviteParticipantType } from "@dtos/invite-participant";
+import { useCreateTripMutation } from "@hooks/use-create-trip";
 
 export function useCreateTrip() {
   const [participantsEmail, setParticipantsEmail] = useState<string[]>([]);
@@ -89,7 +90,7 @@ export function useCreateTrip() {
       });
 
       toast.success("Viagem criada com sucesso!");
-      navigate(`trips/${tripCode}`);
+      navigate(`/trips/${tripCode}`);
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error.response?.data.message);

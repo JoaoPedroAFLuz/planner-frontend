@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { activityService } from "@services/activityService";
+import { activityService } from "@services/activity-service";
 
 interface CreateActivityProps {
   tripCode: string;

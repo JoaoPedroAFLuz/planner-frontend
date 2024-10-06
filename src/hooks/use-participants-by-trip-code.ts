@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { participantService } from "../services/participantService";
+import { participantService } from "../services/participant-service";
 
 export function useParticipantsByTripCode(tripCode: string) {
   const { data, isFetching, refetch } = useQuery({

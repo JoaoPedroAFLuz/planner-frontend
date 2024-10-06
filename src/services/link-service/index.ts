@@ -1,5 +1,5 @@
 import { create } from "./create";
-import { getAllByActivityCode } from "./getAllByActivityCode";
+import { getAllByActivityCode } from "./get-all-by-activity-code";
 import { remove } from "./remove";
 
 export const linkService = {

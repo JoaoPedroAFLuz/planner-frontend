@@ -1,7 +1,7 @@
 import { Link2, Tag, X } from "lucide-react";
 
-import { useCreateLink } from "@hooks/useCreateLink";
-import { useLinksByActivityCode } from "@hooks/useLinksByActivityCode";
+import { useCreateLink } from "@hooks/use-create-link";
+import { useLinksByActivityCode } from "@hooks/use-links-by-activity-code";
 
 import { Button } from "@components/button";
 import { Form } from "@components/form";
@@ -19,7 +19,8 @@ export function CreateLinkModal({
   closeCreateLinkModal,
 }: CreateLinkModalProps) {
   const { isCreateLinkPending, createLink } = useCreateLink();
-  const { refetch } = useLinksByActivityCode(activityCode);
+  const { isFetchingLinks, refetchLinks } =
+    useLinksByActivityCode(activityCode);
 
   const form = useForm<CreateLinkType>({
     resolver: zodResolver(createLinkSchema),
@@ -31,7 +32,7 @@ export function CreateLinkModal({
       ...data,
     });
 
-    await refetch();
+    await refetchLinks();
 
     closeCreateLinkModal();
   }
@@ -84,8 +85,14 @@ export function CreateLinkModal({
             <Form.ErrorMessage field="url" />
           </Form.Field>
 
-          <Button type="submit" size="full" disabled={isCreateLinkPending}>
-            {isCreateLinkPending ? "Cadastrando..." : "Cadastrar"}
+          <Button
+            type="submit"
+            size="full"
+            disabled={isCreateLinkPending || isFetchingLinks}
+          >
+            {isCreateLinkPending || isFetchingLinks
+              ? "Cadastrando..."
+              : "Cadastrar"}
           </Button>
         </Form.Root>
       </div>

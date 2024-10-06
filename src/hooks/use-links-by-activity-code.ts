@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { linkService } from "../services/linkService";
+import { linkService } from "../services/link-service";
 
 export function useLinksByActivityCode(activityCode: string) {
   const { data, isFetching, refetch } = useQuery({
@@ -8,5 +8,9 @@ export function useLinksByActivityCode(activityCode: string) {
     queryFn: async () => linkService.getAllByActivityCode(activityCode),
   });
 
-  return { links: data || [], isFetching, refetch };
+  return {
+    links: data || [],
+    isFetchingLinks: isFetching,
+    refetchLinks: refetch,
+  };
 }

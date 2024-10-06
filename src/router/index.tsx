@@ -4,6 +4,7 @@ import { PrivatePagesLayout } from "@components/private-pages-layout";
 import { CreateTripPage } from "@pages/create-trip";
 import { Login } from "@pages/login";
 import { TripDetailsPage } from "@pages/trip-details";
+import { Trips } from "@pages/trips";
 import { AuthGuard } from "./auth-guard";
 
 const router = createBrowserRouter([
@@ -19,7 +20,8 @@ const router = createBrowserRouter([
       {
         element: <PrivatePagesLayout />,
         children: [
-          { path: "/", element: <CreateTripPage /> },
+          { path: "/", element: <Trips /> },
+          { path: "/create-trip", element: <CreateTripPage /> },
           { path: "/trips/:tripCode", element: <TripDetailsPage /> },
         ],
       },

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { linkService } from "../services/linkService";
+import { linkService } from "../services/link-service";
 
 interface RemoveLinkProps {
   activityCode: string;
@@ -12,5 +12,5 @@ export function useRemoveLink() {
     mutationFn: async (data: RemoveLinkProps) => linkService.remove(data),
   });
 
-  return { isPending, removeLink: mutateAsync };
+  return { isPendingRemoveLink: isPending, removeLink: mutateAsync };
 }

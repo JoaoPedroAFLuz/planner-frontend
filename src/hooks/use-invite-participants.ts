@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { participantService } from "../services/participantService";
+import { participantService } from "../services/participant-service";
 
 interface InviteParticipantToTripProps {
   tripCode: string;

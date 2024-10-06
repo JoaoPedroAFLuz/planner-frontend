@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
-import { useApiFormErrors } from "@hooks/use-api-form-error";
+import { useApiFormErrors } from "@hooks/use-api-form-errors";
 
 interface ErrorMessageProps {
   field: string;

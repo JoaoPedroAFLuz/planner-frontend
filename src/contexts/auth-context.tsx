@@ -2,10 +2,10 @@ import { useLayoutEffect, useState } from "react";
 
 import { storageKeys } from "@configs/storage-keys";
 import { LoginProps } from "@dtos/login";
+import { AuthContext, AuthContextValue } from "@hooks/use-auth";
 import { useLogin } from "@hooks/use-login";
-import { AuthContext, AuthContextValue } from "@hooks/user-auth";
 import { httpClient } from "@libs/axios";
-import { authService } from "@services/authService";
+import { authService } from "@services/auth-service";
 
 interface AuthContextProps {
   children: React.ReactNode;

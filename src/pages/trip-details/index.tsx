@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { CreateActivityType } from "@dtos/create-activity";
-import { useCreateActivity } from "@hooks/useCreateActivity";
-import { useDayActivitiesByTripCode } from "@hooks/useDayActivitiesByTripCode";
-import { useTrip } from "@hooks/useTrip";
+import { useCreateActivity } from "@hooks/use-create-activity";
+import { useDayActivitiesByTripCode } from "@hooks/use-day-activities-by-trip-code";
+import { useTrip } from "@hooks/use-trip";
 
 import { Activities } from "./activities";
 import { CreateActivityModal } from "./activities/create-activity-modal";
@@ -64,16 +64,16 @@ export function TripDetailsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8 px-6 py-10">
+    <div className="mx-auto max-w-6xl space-y-8 px-6">
       <DestinationAndDateHeader trip={trip} />
 
-      <main className="flex gap-16 px-4">
+      <div className="flex gap-16 px-4 pb-8">
         <Activities openCreateActivityModal={openCreateActivityModal} />
 
         <div className="w-80 space-y-6">
-          <Participants />
+          <Participants owner={trip?.owner} />
         </div>
-      </main>
+      </div>
 
       {isCreateActivityModalOpen && (
         <CreateActivityModal
